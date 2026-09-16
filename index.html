@@ -4,9 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Резюме — Шеховцов Максим Артемович</title>
-  <meta name="description" content="Інтерактивне резюме формату А4 для фахівця з кібербезпеки з можливістю розтягування клітинок як в Excel та повноцінним експортом у PowerPoint (PPTX) з інтерактивним текстом.">
+  <meta name="description" content="Односторінкове інтерактивне резюме формату А4 для фахівця з кібербезпеки з панеллю форматування шрифтів і кольорів як у Word, розтягуванням клітинок як в Excel та експортом у PowerPoint (PPTX) з редагованим текстом.">
   <meta property="og:title" content="Резюме — Шеховцов Максим Артемович">
-  <meta property="og:description" content="Інтерактивне резюме формату А4 для фахівця з кібербезпеки з можливістю розтягування клітинок як в Excel та повноцінним експортом у PowerPoint (PPTX) з інтерактивним текстом.">
+  <meta property="og:description" content="Односторінкове інтерактивне резюме формату А4 для фахівця з кібербезпеки з панеллю форматування шрифтів і кольорів як у Word, розтягуванням клітинок як в Excel та експортом у PowerPoint (PPTX) з редагованим текстом.">
   <!-- Бібліотека PptxGenJS для створення PowerPoint презентацій з інтерактивним текстом -->
   <script src="/pptxgen.bundle.js"></script>
   <script>
@@ -17,6 +17,10 @@
     }
   </script>
   <!-- Модулі комп'ютерного зору для автоцентрування фото по обличчю (Face Detection) -->
+    <!-- Підключення різноманітних шрифтів для резюме (Google Fonts: Cyrillic + Latin) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&family=Merriweather:ital,wght@0,300;0,400;0,700;1,300&family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Open+Sans:ital,wght@0,400;0,600;0,700;1,400&family=Oswald:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,400;1,500&display=swap" rel="stylesheet">
   <script src="/tracking-min.js"></script>
   <script src="/face-min.js"></script>
   <style>
@@ -24,6 +28,7 @@
        CSS Змінні та налаштування розмірів
        ========================================================================== */
     :root {
+      --document-font: "Roboto", -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, Helvetica, sans-serif;
       --sidebar-width: 33%;
       --page-padding-y: 18mm;
       --page-padding-x: 15mm;
@@ -59,7 +64,7 @@
     }
 
     body {
-      font-family: "Roboto", -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, Helvetica, sans-serif;
+      font-family: var(--document-font, "Roboto", -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, Helvetica, sans-serif);
       background-color: #0b0f17;
       color: #1a202c;
       line-height: var(--line-height-scale);
@@ -355,6 +360,7 @@
        Контейнер А4 (210mm x 297mm)
        ========================================================================== */
     .resume-a4 {
+      font-family: var(--document-font);
       width: 210mm;
       min-height: 297mm;
       height: 297mm;
@@ -1669,6 +1675,307 @@
         background: none !important;
       }
     }
+
+    /* ==========================================================================
+       Панель форматування тексту як у Microsoft Word (Word Formatting Ribbon)
+       ========================================================================== */
+    .toolbar-row-word {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px;
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px solid #1f2937;
+      font-size: 12px;
+      color: #cbd5e1;
+    }
+
+    .word-tool-group {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding-right: 8px;
+      border-right: 1px solid #2d3748;
+    }
+
+    .word-tool-group:last-child {
+      border-right: none;
+      padding-right: 0;
+    }
+
+    .word-label {
+      font-size: 10.5px;
+      font-weight: 600;
+      color: #94a3b8;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-right: 3px;
+      user-select: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+    }
+
+    .word-select-wrapper {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+    }
+
+    .word-select {
+      background: #0f172a;
+      border: 1px solid #334155;
+      color: #f8fafc;
+      padding: 4px 8px;
+      border-radius: 6px;
+      font-size: 12px;
+      outline: none;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      height: 28px;
+    }
+
+    .word-select:hover, .word-select:focus {
+      border-color: #3b82f6;
+      box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+    }
+
+    .word-font-select {
+      width: 175px;
+      font-weight: 500;
+    }
+
+    .word-size-select {
+      width: 68px;
+      font-weight: 600;
+    }
+
+    .word-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: #0f172a;
+      border: 1px solid #334155;
+      color: #cbd5e1;
+      padding: 4px 8px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      user-select: none;
+      height: 28px;
+      min-width: 28px;
+    }
+
+    .word-btn:hover {
+      background: #1e293b;
+      color: #ffffff;
+      border-color: #475569;
+    }
+
+    .word-btn:active {
+      transform: scale(0.96);
+    }
+
+    .word-btn.active {
+      background: #2563eb;
+      border-color: #3b82f6;
+      color: #ffffff;
+      box-shadow: inset 0 1px 3px rgba(0,0,0,0.3);
+    }
+
+    .word-btn-icon {
+      width: 28px;
+      padding: 0;
+    }
+
+    .word-btn-action {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 4px 9px;
+      font-size: 11.5px;
+      font-weight: 500;
+      background: #1e293b;
+      color: #93c5fd;
+      border-color: #3b82f6;
+    }
+
+    .word-btn-action:hover {
+      background: #2563eb;
+      color: #ffffff;
+    }
+
+    /* Кольорові кнопки Word (Текст та Маркер) */
+    .word-color-btn-wrap {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+    }
+
+    .word-color-btn {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 28px;
+      height: 28px;
+      background: #0f172a;
+      border: 1px solid #334155;
+      color: #f1f5f9;
+      border-radius: 6px 0 0 6px;
+      cursor: pointer;
+      padding: 1px;
+      line-height: 1;
+    }
+
+    .word-color-btn:hover {
+      background: #1e293b;
+      border-color: #475569;
+    }
+
+    .word-color-arrow {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 16px;
+      height: 28px;
+      background: #0f172a;
+      border: 1px solid #334155;
+      border-left: none;
+      color: #94a3b8;
+      border-radius: 0 6px 6px 0;
+      cursor: pointer;
+      font-size: 8px;
+    }
+
+    .word-color-arrow:hover {
+      background: #1e293b;
+      color: #ffffff;
+    }
+
+    .word-color-bar {
+      width: 18px;
+      height: 3px;
+      border-radius: 1px;
+      margin-top: 1px;
+      background: #0f172a;
+      box-shadow: 0 0 1px rgba(0,0,0,0.5);
+    }
+
+    /* Випадаюче меню кольорів (Палітра Word) */
+    .word-palette-popover {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      margin-top: 6px;
+      background: #0f172a;
+      border: 1px solid #334155;
+      border-radius: 8px;
+      padding: 10px;
+      z-index: 1200;
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.6);
+      width: 200px;
+    }
+
+    .word-palette-popover.open {
+      display: block;
+      animation: popoverFadeIn 0.15s ease;
+    }
+
+    @keyframes popoverFadeIn {
+      from { opacity: 0; transform: translateY(-4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .palette-title {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: #94a3b8;
+      margin-bottom: 6px;
+      letter-spacing: 0.05em;
+    }
+
+    .palette-grid {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 5px;
+      margin-bottom: 8px;
+    }
+
+    .palette-swatch {
+      width: 24px;
+      height: 24px;
+      border-radius: 4px;
+      border: 1px solid rgba(255,255,255,0.2);
+      cursor: pointer;
+      transition: transform 0.1s, border-color 0.1s;
+      outline: none;
+    }
+
+    .palette-swatch:hover {
+      transform: scale(1.15);
+      border-color: #ffffff;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+    }
+
+    .palette-custom-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding-top: 6px;
+      border-top: 1px solid #1e293b;
+      margin-top: 4px;
+    }
+
+    .palette-custom-input {
+      width: 24px;
+      height: 24px;
+      padding: 0;
+      border: none;
+      background: none;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+
+    .palette-custom-label {
+      font-size: 11px;
+      color: #cbd5e1;
+      cursor: pointer;
+    }
+
+    /* Спливаюча міні-панель Word при виділенні тексту */
+    .word-mini-toolbar {
+      position: absolute;
+      display: none;
+      align-items: center;
+      gap: 3px;
+      background: #111827;
+      border: 1px solid #3b82f6;
+      border-radius: 8px;
+      padding: 4px 6px;
+      z-index: 1100;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+      transform: translate(-50%, -100%);
+      margin-top: -8px;
+      animation: popoverFadeIn 0.12s ease;
+    }
+
+    .word-mini-toolbar::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 50%;
+      transform: translateX(-50%);
+      border-width: 5px 5px 0 5px;
+      border-style: solid;
+      border-color: #111827 transparent transparent transparent;
+    }
+
   </style>
 </head>
 <body class="is-editing" data-density="standard">
@@ -1738,6 +2045,202 @@
         </button>
       </div>
     </div>
+
+    <!-- Рядок форматування тексту як у Microsoft Word (Панель Word) -->
+    <div class="toolbar-row-word" id="word-toolbar">
+      <!-- Група 1: Шрифт та його охоплення -->
+      <div class="word-tool-group">
+        <span class="word-label">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7V4h16v3M9 20h6M12 4v16"/></svg>
+          Шрифт:
+        </span>
+        <div class="word-select-wrapper">
+          <select id="word-font-family-select" class="word-select word-font-select" onchange="onWordFontChange(this.value)" title="Виберіть шрифт тексту або всього резюме">
+            <optgroup label="── Google Fonts (з Кирилицею) ──">
+              <option value="'Roboto', sans-serif" style="font-family: 'Roboto', sans-serif;">Roboto (Стандартний)</option>
+              <option value="'Montserrat', sans-serif" style="font-family: 'Montserrat', sans-serif;">Montserrat (Модерн)</option>
+              <option value="'Inter', sans-serif" style="font-family: 'Inter', sans-serif;">Inter (Технологічний)</option>
+              <option value="'Open Sans', sans-serif" style="font-family: 'Open Sans', sans-serif;">Open Sans (Нейтральний)</option>
+              <option value="'Merriweather', Georgia, serif" style="font-family: 'Merriweather', serif;">Merriweather (Антиква / Засічки)</option>
+              <option value="'Playfair Display', serif" style="font-family: 'Playfair Display', serif;">Playfair Display (Преміум із засічками)</option>
+              <option value="'Oswald', sans-serif" style="font-family: 'Oswald', sans-serif;">Oswald (Конденсований)</option>
+              <option value="'Fira Code', monospace" style="font-family: 'Fira Code', monospace;">Fira Code (IT / Моноширинний)</option>
+            </optgroup>
+            <optgroup label="── Класичні офісні шрифти ──">
+              <option value="'Calibri', 'Carlito', sans-serif" style="font-family: 'Calibri', sans-serif;">Calibri (Стандарт MS Word)</option>
+              <option value="Arial, Helvetica, sans-serif" style="font-family: Arial, sans-serif;">Arial (Універсальний)</option>
+              <option value="'Times New Roman', Times, serif" style="font-family: 'Times New Roman', serif;">Times New Roman (Офіційний)</option>
+              <option value="Georgia, serif" style="font-family: Georgia, serif;">Georgia (Елегантний)</option>
+              <option value="'Segoe UI', sans-serif" style="font-family: 'Segoe UI', sans-serif;">Segoe UI (Windows)</option>
+              <option value="'Trebuchet MS', sans-serif" style="font-family: 'Trebuchet MS', sans-serif;">Trebuchet MS (Гротеск)</option>
+            </optgroup>
+          </select>
+        </div>
+        <button class="word-btn word-btn-action" id="btn-apply-font-doc" onmousedown="event.preventDefault()" onclick="applyFontToDocument()" title="Застосувати обраний шрифт до всього резюме">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+          <span>До всього резюме</span>
+        </button>
+      </div>
+
+      <!-- Група 2: Розмір шрифту -->
+      <div class="word-tool-group">
+        <span class="word-label">Розмір:</span>
+        <div class="word-select-wrapper">
+          <select id="word-font-size-select" class="word-select word-size-select" onchange="onWordFontSizeChange(this.value)" title="Розмір шрифту виділеного тексту">
+            <option value="8">8 pt</option>
+            <option value="9">9 pt</option>
+            <option value="10">10 pt</option>
+            <option value="11">11 pt</option>
+            <option value="12" selected>12 pt</option>
+            <option value="13">13 pt</option>
+            <option value="14">14 pt</option>
+            <option value="16">16 pt</option>
+            <option value="18">18 pt</option>
+            <option value="20">20 pt</option>
+            <option value="24">24 pt</option>
+            <option value="28">28 pt</option>
+            <option value="32">32 pt</option>
+          </select>
+        </div>
+        <button class="word-btn word-btn-icon" onmousedown="event.preventDefault()" onclick="stepFontSize(1)" title="Збільшити шрифт (A▲)">
+          <span style="font-size: 13px; font-weight: 700;">A</span><span style="font-size: 8px; margin-left: 1px;">▲</span>
+        </button>
+        <button class="word-btn word-btn-icon" onmousedown="event.preventDefault()" onclick="stepFontSize(-1)" title="Зменшити шрифт (A▼)">
+          <span style="font-size: 11px; font-weight: 700;">A</span><span style="font-size: 8px; margin-left: 1px;">▼</span>
+        </button>
+      </div>
+
+      <!-- Група 3: Базове накреслення (B, I, U, S) -->
+      <div class="word-tool-group">
+        <button class="word-btn word-btn-icon" id="word-btn-bold" onmousedown="event.preventDefault()" onclick="execWordCmd('bold')" title="Жирний (Ctrl+B)">
+          <strong style="font-size: 13px; font-family: serif;">B</strong>
+        </button>
+        <button class="word-btn word-btn-icon" id="word-btn-italic" onmousedown="event.preventDefault()" onclick="execWordCmd('italic')" title="Курсив (Ctrl+I)">
+          <em style="font-size: 13px; font-family: serif;">I</em>
+        </button>
+        <button class="word-btn word-btn-icon" id="word-btn-underline" onmousedown="event.preventDefault()" onclick="execWordCmd('underline')" title="Підкреслений (Ctrl+U)">
+          <u style="font-size: 13px; font-family: serif;">U</u>
+        </button>
+        <button class="word-btn word-btn-icon" id="word-btn-strike" onmousedown="event.preventDefault()" onclick="execWordCmd('strikeThrough')" title="Перекреслений">
+          <s style="font-size: 13px;">S</s>
+        </button>
+      </div>
+
+      <!-- Група 4: Кольори як у Microsoft Word (Колір тексту та Маркер) -->
+      <div class="word-tool-group">
+        <!-- Кнопка кольору тексту з палітрою -->
+        <div class="word-color-btn-wrap" id="wrap-text-color">
+          <button class="word-color-btn" onmousedown="event.preventDefault()" onclick="applyCurrentTextColor()" title="Застосувати обраний колір до тексту">
+            <span style="font-size: 13px; font-weight: 800; font-family: serif;">A</span>
+            <span class="word-color-bar" id="word-text-color-bar" style="background-color: #0F172A;"></span>
+          </button>
+          <button class="word-color-arrow" onmousedown="event.preventDefault()" onclick="toggleColorPalette('text')" title="Палітра кольорів тексту (Word)">
+            ▼
+          </button>
+          <!-- Випадаюча палітра кольору тексту -->
+          <div class="word-palette-popover" id="palette-text-color">
+            <div class="palette-title">Колір тексту (Word):</div>
+            <div class="palette-grid">
+              <button type="button" class="palette-swatch" style="background: #0F172A;" onmousedown="event.preventDefault()" onclick="selectTextColor('#0F172A')" title="Темний графіт (Текст за замовчуванням)"></button>
+              <button type="button" class="palette-swatch" style="background: #000000;" onmousedown="event.preventDefault()" onclick="selectTextColor('#000000')" title="Чорний"></button>
+              <button type="button" class="palette-swatch" style="background: #1D4ED8;" onmousedown="event.preventDefault()" onclick="selectTextColor('#1D4ED8')" title="Синій акцент"></button>
+              <button type="button" class="palette-swatch" style="background: #0C1829;" onmousedown="event.preventDefault()" onclick="selectTextColor('#0C1829')" title="Темно-синій ХНУВС"></button>
+              <button type="button" class="palette-swatch" style="background: #0284C7;" onmousedown="event.preventDefault()" onclick="selectTextColor('#0284C7')" title="Небесно-блакитний"></button>
+              <button type="button" class="palette-swatch" style="background: #0D9488;" onmousedown="event.preventDefault()" onclick="selectTextColor('#0D9488')" title="Бірюзовий"></button>
+              <button type="button" class="palette-swatch" style="background: #16A34A;" onmousedown="event.preventDefault()" onclick="selectTextColor('#16A34A')" title="Смарагдовий зелений"></button>
+              <button type="button" class="palette-swatch" style="background: #DC2626;" onmousedown="event.preventDefault()" onclick="selectTextColor('#DC2626')" title="Червоний"></button>
+              <button type="button" class="palette-swatch" style="background: #EA580C;" onmousedown="event.preventDefault()" onclick="selectTextColor('#EA580C')" title="Помаранчевий"></button>
+              <button type="button" class="palette-swatch" style="background: #D97706;" onmousedown="event.preventDefault()" onclick="selectTextColor('#D97706')" title="Золотистий бурштин"></button>
+              <button type="button" class="palette-swatch" style="background: #7C3AED;" onmousedown="event.preventDefault()" onclick="selectTextColor('#7C3AED')" title="Фіолетовий"></button>
+              <button type="button" class="palette-swatch" style="background: #64748B;" onmousedown="event.preventDefault()" onclick="selectTextColor('#64748B')" title="Сталевий сірий"></button>
+              <button type="button" class="palette-swatch" style="background: #94A3B8;" onmousedown="event.preventDefault()" onclick="selectTextColor('#94A3B8')" title="Світло-сірий"></button>
+              <button type="button" class="palette-swatch" style="background: #FFFFFF; border: 1px solid #94a3b8;" onmousedown="event.preventDefault()" onclick="selectTextColor('#FFFFFF')" title="Чистий білий (для темного сайдбару)"></button>
+            </div>
+            <div class="palette-custom-row">
+              <input type="color" id="word-custom-color-input" class="palette-custom-input" value="#1D4ED8" onchange="selectTextColor(this.value)">
+              <label for="word-custom-color-input" class="palette-custom-label">Інший колір...</label>
+            </div>
+          </div>
+        </div>
+
+        <!-- Кнопка маркера (Виділення фоном) -->
+        <div class="word-color-btn-wrap" id="wrap-highlight-color">
+          <button class="word-color-btn" onmousedown="event.preventDefault()" onclick="applyCurrentHighlight()" title="Виділити текст маркером">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 11-6 6v3h3l6-6"/><path d="m22 2-2.5 2.5-4-4L18 0l4 2z"/><path d="m14 4 6 6"/></svg>
+            <span class="word-color-bar" id="word-highlight-color-bar" style="background-color: #FEF08A;"></span>
+          </button>
+          <button class="word-color-arrow" onmousedown="event.preventDefault()" onclick="toggleColorPalette('highlight')" title="Палітра маркерів виділення">
+            ▼
+          </button>
+          <!-- Випадаюча палітра маркерів -->
+          <div class="word-palette-popover" id="palette-highlight-color">
+            <div class="palette-title">Маркер виділення:</div>
+            <div class="palette-grid">
+              <button type="button" class="palette-swatch" style="background: #FEF08A;" onmousedown="event.preventDefault()" onclick="selectHighlightColor('#FEF08A')" title="Жовтий маркер"></button>
+              <button type="button" class="palette-swatch" style="background: #BBF7D0;" onmousedown="event.preventDefault()" onclick="selectHighlightColor('#BBF7D0')" title="Салатовий маркер"></button>
+              <button type="button" class="palette-swatch" style="background: #BAE6FD;" onmousedown="event.preventDefault()" onclick="selectHighlightColor('#BAE6FD')" title="Блакитний маркер"></button>
+              <button type="button" class="palette-swatch" style="background: #FBCFE8;" onmousedown="event.preventDefault()" onclick="selectHighlightColor('#FBCFE8')" title="Рожевий маркер"></button>
+              <button type="button" class="palette-swatch" style="background: #FED7AA;" onmousedown="event.preventDefault()" onclick="selectHighlightColor('#FED7AA')" title="Помаранчевий маркер"></button>
+              <button type="button" class="palette-swatch" style="background: #E9D5FF;" onmousedown="event.preventDefault()" onclick="selectHighlightColor('#E9D5FF')" title="Лавандовий маркер"></button>
+              <button type="button" class="palette-swatch" style="background: #E2E8F0;" onmousedown="event.preventDefault()" onclick="selectHighlightColor('#E2E8F0')" title="Світло-сірий"></button>
+              <button type="button" class="palette-swatch" style="background: transparent; border: 1px dashed #ef4444; position: relative;" onmousedown="event.preventDefault()" onclick="selectHighlightColor('transparent')" title="Без виділення (Прибрати маркер)">
+                <span style="color: #ef4444; font-size: 11px; font-weight: 700; line-height: 22px; display: block; text-align: center;">✕</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Група 5: Вирівнювання (Paragraph) -->
+      <div class="word-tool-group">
+        <button class="word-btn word-btn-icon" id="word-btn-align-left" onmousedown="event.preventDefault()" onclick="execWordCmd('justifyLeft')" title="По лівому краю">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="15" y2="12"/><line x1="3" y1="18" x2="18" y2="18"/></svg>
+        </button>
+        <button class="word-btn word-btn-icon" id="word-btn-align-center" onmousedown="event.preventDefault()" onclick="execWordCmd('justifyCenter')" title="По центру">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="6" y1="12" x2="18" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/></svg>
+        </button>
+        <button class="word-btn word-btn-icon" id="word-btn-align-right" onmousedown="event.preventDefault()" onclick="execWordCmd('justifyRight')" title="По правому краю">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="9" y1="12" x2="21" y2="12"/><line x1="6" y1="18" x2="21" y2="18"/></svg>
+        </button>
+        <button class="word-btn word-btn-icon" id="word-btn-align-justify" onmousedown="event.preventDefault()" onclick="execWordCmd('justifyFull')" title="По ширині">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+      </div>
+
+      <!-- Група 6: Списки та Регістр -->
+      <div class="word-tool-group">
+        <button class="word-btn word-btn-icon" id="word-btn-bullet" onmousedown="event.preventDefault()" onclick="execWordCmd('insertUnorderedList')" title="Маркований список">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="9" y1="6" x2="20" y2="6"/><line x1="9" y1="12" x2="20" y2="12"/><line x1="9" y1="18" x2="20" y2="18"/><circle cx="4" cy="6" r="2" fill="currentColor"/><circle cx="4" cy="12" r="2" fill="currentColor"/><circle cx="4" cy="18" r="2" fill="currentColor"/></svg>
+        </button>
+        <button class="word-btn word-btn-icon" id="word-btn-number" onmousedown="event.preventDefault()" onclick="execWordCmd('insertOrderedList')" title="Нумерований список">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="10" y1="6" x2="21" y2="6"/><line x1="10" y1="12" x2="21" y2="12"/><line x1="10" y1="18" x2="21" y2="18"/><text x="2" y="7" font-size="7" font-weight="bold" fill="currentColor">1</text><text x="2" y="13" font-size="7" font-weight="bold" fill="currentColor">2</text><text x="2" y="19" font-size="7" font-weight="bold" fill="currentColor">3</text></svg>
+        </button>
+        <!-- Регістр букв (Aa) -->
+        <div class="word-select-wrapper" style="width: 54px;">
+          <select id="word-case-select" class="word-select" onchange="changeSelectionCase(this.value); this.value='';" title="Зміна регістру (Aa)">
+            <option value="" disabled selected>Aa ▾</option>
+            <option value="sentence">Як у реченні</option>
+            <option value="lower">всі маленькі</option>
+            <option value="upper">ВСІ ВЕЛИКІ</option>
+            <option value="title">Кожне З Великої</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Група 7: Очищення та Скасування дій -->
+      <div class="word-tool-group">
+        <button class="word-btn word-btn-icon" onmousedown="event.preventDefault()" onclick="clearWordFormatting()" title="Очистити форматування тексту">
+          <span style="font-size: 11px; font-weight: 700; color: #f87171;">T✕</span>
+        </button>
+        <button class="word-btn word-btn-icon" onmousedown="event.preventDefault()" onclick="execWordCmd('undo')" title="Скасувати дію (Ctrl+Z)">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7v6h6"/><path d="M21 17a9 9 0 0 0-9-9 9 9 0 0 0-6 2.3L3 13"/></svg>
+        </button>
+        <button class="word-btn word-btn-icon" onmousedown="event.preventDefault()" onclick="execWordCmd('redo')" title="Повторити дію (Ctrl+Y)">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 7v6h-6"/><path d="M3 17a9 9 0 0 1 9-9 9 9 0 0 1 6 2.3L21 13"/></svg>
+        </button>
+      </div>
+    </div>
+
 
     <!-- Другий поверх панелі: точне розтягування рядків, колонок і тексту -->
     <div class="toolbar-row-excel">
@@ -2111,6 +2614,9 @@
       sidebarWidth: 33,
       fontScale: 100,
       showGrid: false,
+      documentFont: "'Roboto', sans-serif",
+      currentTextColor: '#0F172A',
+      currentHighlightColor: '#FEF08A',
       photoZoom: 100,
       photoX: 0,
       photoY: 0,
@@ -2129,6 +2635,7 @@
       initColumnSplitter();
       initPhotoInteractions();
       initPhotoDragAndDrop();
+      initWordToolbar();
     });
 
     // ==========================================================================
@@ -2312,6 +2819,15 @@
           setDensity(appSettings.density || 'standard');
           updateSidebarWidth(appSettings.sidebarWidth || 33);
           updateFontScale(appSettings.fontScale || 100);
+          if (appSettings.documentFont) {
+            applyFontToDocument(appSettings.documentFont, false);
+          }
+          if (appSettings.currentTextColor) {
+            updateTextColorUI(appSettings.currentTextColor);
+          }
+          if (appSettings.currentHighlightColor) {
+            updateHighlightColorUI(appSettings.currentHighlightColor);
+          }
 
           if (appSettings.showGrid) {
             document.body.classList.add('show-excel-grid');
@@ -3458,6 +3974,24 @@
     // ==========================================================================
     // ПОВНОЦІННИЙ ЕКСПОРТ У POWERPOINT (.PPTX) З ІНТЕРАКТИВНИМ ТЕКСТОМ
     // ==========================================================================
+    
+    function getPptxFontFace() {
+      const f = appSettings.documentFont || "'Roboto', sans-serif";
+      if (f.includes('Calibri')) return 'Calibri';
+      if (f.includes('Times New Roman')) return 'Times New Roman';
+      if (f.includes('Georgia')) return 'Georgia';
+      if (f.includes('Montserrat')) return 'Montserrat';
+      if (f.includes('Inter')) return 'Inter';
+      if (f.includes('Open Sans')) return 'Open Sans';
+      if (f.includes('Playfair Display')) return 'Playfair Display';
+      if (f.includes('Oswald')) return 'Oswald';
+      if (f.includes('Fira Code')) return 'Fira Code';
+      if (f.includes('Segoe UI')) return 'Segoe UI';
+      if (f.includes('Trebuchet MS')) return 'Trebuchet MS';
+      if (f.includes('Roboto')) return 'Roboto';
+      return 'Arial';
+    }
+
     async function exportToPPTX() {
       const btn = document.getElementById('btn-export-pptx');
       const btnText = document.getElementById('pptx-btn-text');
@@ -3483,6 +4017,7 @@
         pptx.layout = 'A4_PORTRAIT';
 
         const slide = pptx.addSlide();
+        const pptxFont = getPptxFontFace();
 
         // 1. Геометрія колонок на основі поточних налаштувань користувача
         const sidebarPct = (appSettings.sidebarWidth || 33) / 100;
@@ -3562,7 +4097,7 @@
           fontSize: 10,
           bold: true,
           color: 'FFFFFF',
-          fontFace: 'Arial',
+          fontFace: pptxFont,
           margin: 0
         });
         slide.addShape(pptx.ShapeType.line, {
@@ -3584,7 +4119,7 @@
 
           const runs = [];
           if (lbl) {
-            runs.push({ text: lbl + '\n', options: { fontSize: 7.5, bold: true, color: '94A3B8', fontFace: 'Arial' } });
+            runs.push({ text: lbl + '\n', options: { fontSize: 7.5, bold: true, color: '94A3B8', fontFace: pptxFont } });
           }
           runs.push({
             text: val,
@@ -3592,7 +4127,7 @@
               fontSize: 9,
               color: 'F1F5F9',
               underline: true,
-              fontFace: 'Arial',
+              fontFace: pptxFont,
               hyperlink: (href && !href.startsWith('tel:')) ? { url: href } : undefined
             }
           });
@@ -3619,7 +4154,7 @@
           fontSize: 10,
           bold: true,
           color: 'FFFFFF',
-          fontFace: 'Arial',
+          fontFace: pptxFont,
           margin: 0
         });
         slide.addShape(pptx.ShapeType.line, {
@@ -3639,8 +4174,8 @@
           const ds = dsEl ? dsEl.innerText.trim() : '';
 
           slide.addText([
-            { text: nm + '\n', options: { fontSize: 9.5, bold: true, color: '60A5FA', fontFace: 'Arial' } },
-            { text: ds, options: { fontSize: 8.5, color: 'CBD5E1', fontFace: 'Arial' } }
+            { text: nm + '\n', options: { fontSize: 9.5, bold: true, color: '60A5FA', fontFace: pptxFont } },
+            { text: ds, options: { fontSize: 8.5, color: 'CBD5E1', fontFace: pptxFont } }
           ], {
             x: sidePad,
             y: curSideY,
@@ -3663,7 +4198,7 @@
           fontSize: 10,
           bold: true,
           color: 'FFFFFF',
-          fontFace: 'Arial',
+          fontFace: pptxFont,
           margin: 0
         });
         slide.addShape(pptx.ShapeType.line, {
@@ -3684,8 +4219,8 @@
           const href = urlEl && urlEl.getAttribute('href') ? urlEl.getAttribute('href') : '';
 
           slide.addText([
-            { text: ttl + '\n', options: { fontSize: 7.5, bold: true, color: '94A3B8', fontFace: 'Arial' } },
-            { text: urlTxt, options: { fontSize: 8.5, color: '93C5FD', underline: true, fontFace: 'Arial', hyperlink: href ? { url: href } : undefined } }
+            { text: ttl + '\n', options: { fontSize: 7.5, bold: true, color: '94A3B8', fontFace: pptxFont } },
+            { text: urlTxt, options: { fontSize: 8.5, color: '93C5FD', underline: true, fontFace: pptxFont, hyperlink: href ? { url: href } : undefined } }
           ], {
             x: sidePad,
             y: curSideY,
@@ -3713,7 +4248,7 @@
           fontSize: 22,
           bold: true,
           color: '0C1829',
-          fontFace: 'Arial',
+          fontFace: pptxFont,
           margin: 0,
           breakLine: true
         });
@@ -3730,7 +4265,7 @@
             fontSize: 11,
             bold: true,
             color: '1D4ED8',
-            fontFace: 'Arial',
+            fontFace: pptxFont,
             margin: 0
           });
           curMainY += 0.34;
@@ -3768,7 +4303,7 @@
           fontSize: 10.5,
           bold: true,
           color: '0C1829',
-          fontFace: 'Arial',
+          fontFace: pptxFont,
           margin: 0
         });
         slide.addShape(pptx.ShapeType.line, {
@@ -3788,7 +4323,7 @@
             h: 0.65,
             fontSize: 9.5,
             color: '334155',
-            fontFace: 'Arial',
+            fontFace: pptxFont,
             align: 'justify',
             margin: 0
           });
@@ -3815,7 +4350,7 @@
           fontSize: 10.5,
           bold: true,
           color: '0C1829',
-          fontFace: 'Arial',
+          fontFace: pptxFont,
           margin: 0
         });
         slide.addShape(pptx.ShapeType.line, {
@@ -3836,16 +4371,16 @@
 
           const runs = [];
           if (tEl && tEl.innerText.trim()) {
-            runs.push({ text: tEl.innerText.trim() + '\n', options: { fontSize: 10.5, bold: true, color: '0F172A', fontFace: 'Arial' } });
+            runs.push({ text: tEl.innerText.trim() + '\n', options: { fontSize: 10.5, bold: true, color: '0F172A', fontFace: pptxFont } });
           }
           if (sEl && sEl.innerText.trim()) {
-            runs.push({ text: sEl.innerText.trim() + '\n', options: { fontSize: 9.5, bold: true, color: '2563EB', fontFace: 'Arial' } });
+            runs.push({ text: sEl.innerText.trim() + '\n', options: { fontSize: 9.5, bold: true, color: '2563EB', fontFace: pptxFont } });
           }
           if (pEl && pEl.innerText.trim()) {
-            runs.push({ text: pEl.innerText.trim() + '\n', options: { fontSize: 8.5, color: '64748B', fontFace: 'Arial' } });
+            runs.push({ text: pEl.innerText.trim() + '\n', options: { fontSize: 8.5, color: '64748B', fontFace: pptxFont } });
           }
           if (nEl && nEl.innerText.trim()) {
-            runs.push({ text: nEl.innerText.trim(), options: { fontSize: 9, color: '475569', fontFace: 'Arial' } });
+            runs.push({ text: nEl.innerText.trim(), options: { fontSize: 9, color: '475569', fontFace: pptxFont } });
           }
 
           slide.addText(runs, {
@@ -3878,7 +4413,7 @@
           fontSize: 10.5,
           bold: true,
           color: '0C1829',
-          fontFace: 'Arial',
+          fontFace: pptxFont,
           margin: 0
         });
         slide.addShape(pptx.ShapeType.line, {
@@ -3898,10 +4433,10 @@
           if (strongEl) {
             const strongText = strongEl.innerText.trim();
             const fullText = item.innerText.replace(strongText, '').replace(/^[:\s]+/, '').trim();
-            runs.push({ text: strongText + ' ', options: { bold: true, color: '0F172A', fontSize: 9.5, fontFace: 'Arial' } });
-            runs.push({ text: fullText, options: { bold: false, color: '334155', fontSize: 9.5, fontFace: 'Arial' } });
+            runs.push({ text: strongText + ' ', options: { bold: true, color: '0F172A', fontSize: 9.5, fontFace: pptxFont } });
+            runs.push({ text: fullText, options: { bold: false, color: '334155', fontSize: 9.5, fontFace: pptxFont } });
           } else {
-            runs.push({ text: item.innerText.trim(), options: { bold: false, color: '334155', fontSize: 9.5, fontFace: 'Arial' } });
+            runs.push({ text: item.innerText.trim(), options: { bold: false, color: '334155', fontSize: 9.5, fontFace: pptxFont } });
           }
 
           slide.addText(runs, {
@@ -3934,7 +4469,7 @@
           h: 0.22,
           fontSize: 7.5,
           color: '94A3B8',
-          fontFace: 'Arial',
+          fontFace: pptxFont,
           margin: 0
         });
         slide.addText(footerRight, {
@@ -3944,7 +4479,7 @@
           h: 0.22,
           fontSize: 7.5,
           color: '94A3B8',
-          fontFace: 'Arial',
+          fontFace: pptxFont,
           align: 'right',
           margin: 0
         });
@@ -3985,7 +4520,7 @@
         fontSize: 9,
         color: "94A3B8",
         bold: true,
-        fontFace: "Arial"
+        fontFace: pptxFont
       });
     }
 
@@ -4022,6 +4557,386 @@
         toast.classList.remove('show');
       }
     }
+  
+    // ==========================================================================
+    // ПОВНОЦІННИЙ МОДУЛЬ ФОРМАТУВАННЯ ТЕКСТУ ЯК У MICROSOFT WORD
+    // ==========================================================================
+    let savedWordRange = null;
+
+    function saveCurrentSelection() {
+      const sel = window.getSelection();
+      if (sel && sel.rangeCount > 0) {
+        const range = sel.getRangeAt(0);
+        const container = document.getElementById('resume-container');
+        if (container && container.contains(range.commonAncestorContainer)) {
+          savedWordRange = range.cloneRange();
+        }
+      }
+    }
+
+    function restoreCurrentSelection() {
+      if (!savedWordRange) return false;
+      try {
+        const sel = window.getSelection();
+        sel.removeAllRanges();
+        sel.addRange(savedWordRange);
+        return true;
+      } catch (e) {
+        return false;
+      }
+    }
+
+    function initWordToolbar() {
+      // Збереження виділення при взаємодії користувача
+      document.addEventListener('selectionchange', () => {
+        saveCurrentSelection();
+        updateWordToolbarStates();
+        updateMiniToolbarPosition();
+      });
+
+      document.addEventListener('mouseup', () => {
+        saveCurrentSelection();
+        updateWordToolbarStates();
+        updateMiniToolbarPosition();
+      });
+
+      document.addEventListener('keyup', () => {
+        saveCurrentSelection();
+        updateWordToolbarStates();
+        updateMiniToolbarPosition();
+      });
+
+      // Закриття палітр кольорів при кліку поза ними
+      document.addEventListener('click', (e) => {
+        if (!e.target.closest('#wrap-text-color') && !e.target.closest('#wrap-highlight-color')) {
+          closeAllColorPalettes();
+        }
+      });
+
+      // Синхронізація початкового стану UI
+      const fontSelect = document.getElementById('word-font-family-select');
+      if (fontSelect && appSettings.documentFont) {
+        fontSelect.value = appSettings.documentFont;
+      }
+      if (appSettings.currentTextColor) {
+        updateTextColorUI(appSettings.currentTextColor);
+      }
+      if (appSettings.currentHighlightColor) {
+        updateHighlightColorUI(appSettings.currentHighlightColor);
+      }
+    }
+
+    // Виконання стандартних команд редагування (Bold, Italic, Underline, Lists тощо)
+    function execWordCmd(command, value = null) {
+      restoreCurrentSelection();
+      try {
+        document.execCommand('styleWithCSS', false, true);
+      } catch (e) {}
+      document.execCommand(command, false, value);
+      scheduleSave();
+      updateWordToolbarStates();
+    }
+
+    // Зміна шрифту тексту (до виділеного або до всього резюме)
+    function onWordFontChange(fontFamily) {
+      restoreCurrentSelection();
+      const sel = window.getSelection();
+      const hasTextSelection = sel && !sel.isCollapsed && sel.toString().trim().length > 0;
+
+      if (hasTextSelection) {
+        // Якщо виділено конкретний фрагмент — застосовуємо саме до нього
+        try {
+          document.execCommand('styleWithCSS', false, true);
+        } catch (e) {}
+        document.execCommand('fontName', false, fontFamily);
+        scheduleSave();
+        showWordToast(`Шрифт виділеного тексту змінено!`);
+      } else {
+        // Якщо нічого не виділено — застосовуємо як основний шрифт усього документа
+        applyFontToDocument(fontFamily, true);
+      }
+
+      const fontSelect = document.getElementById('word-font-family-select');
+      const miniSelect = document.getElementById('mini-font-select');
+      if (fontSelect) fontSelect.value = fontFamily;
+      if (miniSelect) miniSelect.value = fontFamily;
+    }
+
+    // Застосування шрифту до всього резюме
+    function applyFontToDocument(fontFamily = null, save = true) {
+      const targetFont = fontFamily || (document.getElementById('word-font-family-select') ? document.getElementById('word-font-family-select').value : "'Roboto', sans-serif");
+      document.documentElement.style.setProperty('--document-font', targetFont);
+      
+      const resume = document.getElementById('resume-container');
+      if (resume) {
+        resume.style.fontFamily = targetFont;
+      }
+
+      appSettings.documentFont = targetFont;
+      if (save) {
+        saveSettings();
+        scheduleSave();
+        const fontDisplayName = targetFont.split(',')[0].replace(/['"]/g, '');
+        showWordToast(`✨ Шрифт "${fontDisplayName}" застосовано до всього резюме!`);
+      }
+
+      const fontSelect = document.getElementById('word-font-family-select');
+      const miniSelect = document.getElementById('mini-font-select');
+      if (fontSelect) fontSelect.value = targetFont;
+      if (miniSelect) miniSelect.value = targetFont;
+    }
+
+    // Зміна розміру шрифту виділеного тексту (в pt)
+    function onWordFontSizeChange(sizePt) {
+      restoreCurrentSelection();
+      const sel = window.getSelection();
+      if (!sel || sel.rangeCount === 0) return;
+
+      if (sel.isCollapsed) {
+        const active = document.activeElement;
+        if (active && active.isContentEditable) {
+          active.style.fontSize = sizePt + 'pt';
+          scheduleSave();
+        }
+        return;
+      }
+
+      try {
+        document.execCommand('styleWithCSS', false, true);
+      } catch (e) {}
+      document.execCommand('fontSize', false, '7');
+
+      const fontElements = document.querySelectorAll('font[size="7"], [style*="-webkit-xxx-large"]');
+      fontElements.forEach(el => {
+        el.removeAttribute('size');
+        el.style.fontSize = sizePt + 'pt';
+      });
+
+      scheduleSave();
+      const sizeSelect = document.getElementById('word-font-size-select');
+      const miniSizeSelect = document.getElementById('mini-size-select');
+      if (sizeSelect) sizeSelect.value = sizePt;
+      if (miniSizeSelect) miniSizeSelect.value = sizePt;
+    }
+
+    function stepFontSize(delta) {
+      restoreCurrentSelection();
+      const sizeSelect = document.getElementById('word-font-size-select');
+      const current = sizeSelect ? (parseInt(sizeSelect.value, 10) || 12) : 12;
+      const newSize = Math.max(7, Math.min(48, current + delta));
+      onWordFontSizeChange(newSize);
+    }
+
+    // Керування випадаючими палітрами кольорів
+    function toggleColorPalette(type) {
+      const textPop = document.getElementById('palette-text-color');
+      const hlPop = document.getElementById('palette-highlight-color');
+
+      if (type === 'text') {
+        if (hlPop) hlPop.classList.remove('open');
+        if (textPop) textPop.classList.toggle('open');
+      } else if (type === 'highlight') {
+        if (textPop) textPop.classList.remove('open');
+        if (hlPop) hlPop.classList.toggle('open');
+      }
+    }
+
+    function closeAllColorPalettes() {
+      const textPop = document.getElementById('palette-text-color');
+      const hlPop = document.getElementById('palette-highlight-color');
+      if (textPop) textPop.classList.remove('open');
+      if (hlPop) hlPop.classList.remove('open');
+    }
+
+    // Вибір та застосування кольору тексту
+    function selectTextColor(color) {
+      appSettings.currentTextColor = color;
+      updateTextColorUI(color);
+      closeAllColorPalettes();
+      applyCurrentTextColor();
+      saveSettings();
+    }
+
+    function applyCurrentTextColor() {
+      restoreCurrentSelection();
+      const color = appSettings.currentTextColor || '#0F172A';
+      try {
+        document.execCommand('styleWithCSS', false, true);
+      } catch (e) {}
+      document.execCommand('foreColor', false, color);
+      scheduleSave();
+    }
+
+    function updateTextColorUI(color) {
+      const bar = document.getElementById('word-text-color-bar');
+      if (bar) bar.style.backgroundColor = color;
+      const customInput = document.getElementById('word-custom-color-input');
+      if (customInput && color.startsWith('#')) customInput.value = color;
+    }
+
+    // Вибір та застосування маркера виділення (Highlight)
+    function selectHighlightColor(color) {
+      appSettings.currentHighlightColor = color;
+      updateHighlightColorUI(color);
+      closeAllColorPalettes();
+      applyCurrentHighlight();
+      saveSettings();
+    }
+
+    function applyCurrentHighlight() {
+      restoreCurrentSelection();
+      const color = appSettings.currentHighlightColor || '#FEF08A';
+      try {
+        document.execCommand('styleWithCSS', false, true);
+      } catch (e) {}
+      
+      if (color === 'transparent') {
+        document.execCommand('removeFormat', false, null);
+      } else {
+        const success = document.execCommand('hiliteColor', false, color);
+        if (!success) {
+          document.execCommand('backColor', false, color);
+        }
+      }
+      scheduleSave();
+    }
+
+    function updateHighlightColorUI(color) {
+      const bar = document.getElementById('word-highlight-color-bar');
+      if (bar) bar.style.backgroundColor = color === 'transparent' ? '#334155' : color;
+    }
+
+    // Зміна регістру (Aa: Sentence, lower, UPPER, Title)
+    function changeSelectionCase(type) {
+      restoreCurrentSelection();
+      const sel = window.getSelection();
+      if (!sel || sel.rangeCount === 0 || sel.isCollapsed) return;
+
+      const text = sel.toString();
+      let converted = text;
+
+      if (type === 'upper') {
+        converted = text.toUpperCase();
+      } else if (type === 'lower') {
+        converted = text.toLowerCase();
+      } else if (type === 'title') {
+        converted = text.replace(/(?:^|\s|\/|-|\.)[a-zа-яіїєґ]/gi, m => m.toUpperCase());
+      } else if (type === 'sentence') {
+        converted = text.charAt(0).toUpperCase() + text.slice(1).toLowerCase();
+      }
+
+      document.execCommand('insertText', false, converted);
+      scheduleSave();
+    }
+
+    // Очистити форматування (T✕)
+    function clearWordFormatting() {
+      restoreCurrentSelection();
+      try {
+        document.execCommand('styleWithCSS', false, false);
+      } catch (e) {}
+      document.execCommand('removeFormat', false, null);
+      scheduleSave();
+      showWordToast('Форматування очищено!');
+    }
+
+    // Оновлення активного стану кнопок на панелі (Bold, Italic, Underline, Align тощо)
+    function updateWordToolbarStates() {
+      try {
+        const isBold = document.queryCommandState('bold');
+        const isItalic = document.queryCommandState('italic');
+        const isUnderline = document.queryCommandState('underline');
+        const isStrike = document.queryCommandState('strikeThrough');
+        const isLeft = document.queryCommandState('justifyLeft');
+        const isCenter = document.queryCommandState('justifyCenter');
+        const isRight = document.queryCommandState('justifyRight');
+        const isJustify = document.queryCommandState('justifyFull');
+        const isBullet = document.queryCommandState('insertUnorderedList');
+        const isNumber = document.queryCommandState('insertOrderedList');
+
+        toggleBtnActive('word-btn-bold', isBold);
+        toggleBtnActive('word-btn-italic', isItalic);
+        toggleBtnActive('word-btn-underline', isUnderline);
+        toggleBtnActive('word-btn-strike', isStrike);
+        toggleBtnActive('word-btn-align-left', isLeft);
+        toggleBtnActive('word-btn-align-center', isCenter);
+        toggleBtnActive('word-btn-align-right', isRight);
+        toggleBtnActive('word-btn-align-justify', isJustify);
+        toggleBtnActive('word-btn-bullet', isBullet);
+        toggleBtnActive('word-btn-number', isNumber);
+      } catch (e) {}
+    }
+
+    function toggleBtnActive(btnId, isActive) {
+      const b = document.getElementById(btnId);
+      if (b) b.classList.toggle('active', !!isActive);
+    }
+
+    // Плаваюча міні-панель над виділеним текстом
+    function updateMiniToolbarPosition() {
+      const miniToolbar = document.getElementById('word-mini-toolbar');
+      if (!miniToolbar) return;
+
+      const sel = window.getSelection();
+      if (!sel || sel.isCollapsed || sel.rangeCount === 0 || sel.toString().trim().length === 0) {
+        miniToolbar.style.display = 'none';
+        return;
+      }
+
+      const container = document.getElementById('resume-container');
+      const range = sel.getRangeAt(0);
+      if (!container || !container.contains(range.commonAncestorContainer)) {
+        miniToolbar.style.display = 'none';
+        return;
+      }
+
+      const rect = range.getBoundingClientRect();
+      if (rect.width === 0 && rect.height === 0) {
+        miniToolbar.style.display = 'none';
+        return;
+      }
+
+      const top = rect.top + window.scrollY - 10;
+      const left = rect.left + window.scrollX + (rect.width / 2);
+
+      miniToolbar.style.top = top + 'px';
+      miniToolbar.style.left = left + 'px';
+      miniToolbar.style.display = 'flex';
+    }
+
+    function showWordToast(message) {
+      let toast = document.getElementById('word-toast');
+      if (!toast) {
+        toast = document.createElement('div');
+        toast.id = 'word-toast';
+        toast.style.position = 'fixed';
+        toast.style.bottom = '24px';
+        toast.style.left = '50%';
+        toast.style.transform = 'translateX(-50%)';
+        toast.style.background = '#1e293b';
+        toast.style.color = '#93c5fd';
+        toast.style.border = '1px solid #3b82f6';
+        toast.style.padding = '8px 16px';
+        toast.style.borderRadius = '9999px';
+        toast.style.fontSize = '12px';
+        toast.style.fontWeight = '600';
+        toast.style.boxShadow = '0 10px 25px rgba(0,0,0,0.5)';
+        toast.style.zIndex = '9999';
+        toast.style.transition = 'all 0.25s ease';
+        toast.style.opacity = '0';
+        toast.style.pointerEvents = 'none';
+        document.body.appendChild(toast);
+      }
+      toast.innerText = message;
+      toast.style.opacity = '1';
+      toast.style.transform = 'translateX(-50%) translateY(0)';
+      clearTimeout(toast._timer);
+      toast._timer = setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateX(-50%) translateY(8px)';
+      }, 3200);
+    }
+
   </script>
 
   <!-- Спливаюче сповіщення про завантаження PPTX з інтерактивним текстом -->
@@ -4034,5 +4949,51 @@
     <button class="toast-close" onclick="closePptxToast()" title="Закрити">×</button>
   </div>
 
+  <!-- Спливаюча міні-панель Word при виділенні тексту -->
+  <div id="word-mini-toolbar" class="word-mini-toolbar no-print">
+    <div class="word-select-wrapper" style="width: 110px;">
+      <select id="mini-font-select" class="word-select" onchange="onWordFontChange(this.value)" style="font-size: 11px; padding: 2px 4px; height: 24px;">
+        <option value="'Roboto', sans-serif">Roboto</option>
+        <option value="'Montserrat', sans-serif">Montserrat</option>
+        <option value="'Inter', sans-serif">Inter</option>
+        <option value="'Open Sans', sans-serif">Open Sans</option>
+        <option value="'Merriweather', Georgia, serif">Merriweather</option>
+        <option value="'Playfair Display', serif">Playfair Display</option>
+        <option value="'Calibri', sans-serif">Calibri</option>
+        <option value="Arial, sans-serif">Arial</option>
+        <option value="'Times New Roman', serif">Times New Roman</option>
+        <option value="'Fira Code', monospace">Fira Code</option>
+      </select>
+    </div>
+    <div class="word-select-wrapper" style="width: 58px;">
+      <select id="mini-size-select" class="word-select" onchange="onWordFontSizeChange(this.value)" style="font-size: 11px; padding: 2px 4px; height: 24px;">
+        <option value="10">10 pt</option>
+        <option value="11">11 pt</option>
+        <option value="12" selected>12 pt</option>
+        <option value="14">14 pt</option>
+        <option value="16">16 pt</option>
+        <option value="18">18 pt</option>
+        <option value="22">22 pt</option>
+      </select>
+    </div>
+    <button class="word-btn word-btn-icon" style="height: 24px; width: 24px;" onmousedown="event.preventDefault()" onclick="execWordCmd('bold')" title="Жирний">
+      <strong style="font-size: 11px;">B</strong>
+    </button>
+    <button class="word-btn word-btn-icon" style="height: 24px; width: 24px;" onmousedown="event.preventDefault()" onclick="execWordCmd('italic')" title="Курсив">
+      <em style="font-size: 11px;">I</em>
+    </button>
+    <button class="word-btn word-btn-icon" style="height: 24px; width: 24px;" onmousedown="event.preventDefault()" onclick="execWordCmd('underline')" title="Підкреслений">
+      <u style="font-size: 11px;">U</u>
+    </button>
+    <button class="word-btn word-btn-icon" style="height: 24px; width: 24px;" onmousedown="event.preventDefault()" onclick="applyCurrentTextColor()" title="Колір тексту">
+      <span style="font-size: 11px; font-weight: 800;">A</span>
+    </button>
+    <button class="word-btn word-btn-icon" style="height: 24px; width: 24px;" onmousedown="event.preventDefault()" onclick="applyCurrentHighlight()" title="Маркер">
+      <span style="font-size: 10px; color: #fef08a;">■</span>
+    </button>
+    <button class="word-btn word-btn-icon" style="height: 24px; width: 24px;" onmousedown="event.preventDefault()" onclick="clearWordFormatting()" title="Очистити форматування">
+      <span style="font-size: 10px; color: #f87171;">✕</span>
+    </button>
+  </div>
 </body>
 </html>
