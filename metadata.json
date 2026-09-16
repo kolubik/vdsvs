@@ -1,0 +1,6 @@
+{
+  "name": "Резюме — Шеховцов Максим Артемович",
+  "description": "Односторінкове інтерактивне резюме формату А4 для фахівця з кібербезпеки з розтягуванням клітинок як в Excel та експортом у PowerPoint (PPTX) з редагованим текстом.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

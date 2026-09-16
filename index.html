@@ -1,0 +1,4038 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Резюме — Шеховцов Максим Артемович</title>
+  <meta name="description" content="Інтерактивне резюме формату А4 для фахівця з кібербезпеки з можливістю розтягування клітинок як в Excel та повноцінним експортом у PowerPoint (PPTX) з інтерактивним текстом.">
+  <meta property="og:title" content="Резюме — Шеховцов Максим Артемович">
+  <meta property="og:description" content="Інтерактивне резюме формату А4 для фахівця з кібербезпеки з можливістю розтягування клітинок як в Excel та повноцінним експортом у PowerPoint (PPTX) з інтерактивним текстом.">
+  <!-- Бібліотека PptxGenJS для створення PowerPoint презентацій з інтерактивним текстом -->
+  <script src="/pptxgen.bundle.js"></script>
+  <script>
+    if (typeof PptxGenJS === 'undefined') {
+      var _s = document.createElement('script');
+      _s.src = 'https://cdn.jsdelivr.net/npm/pptxgenjs@3.12.0/dist/pptxgen.bundle.js';
+      document.head.appendChild(_s);
+    }
+  </script>
+  <!-- Модулі комп'ютерного зору для автоцентрування фото по обличчю (Face Detection) -->
+  <script src="/tracking-min.js"></script>
+  <script src="/face-min.js"></script>
+  <style>
+    /* ==========================================================================
+       CSS Змінні та налаштування розмірів
+       ========================================================================== */
+    :root {
+      --sidebar-width: 33%;
+      --page-padding-y: 18mm;
+      --page-padding-x: 15mm;
+      --sidebar-padding-x: 13mm;
+      --font-scale: 100%;
+      --line-height-scale: 1.45;
+      --section-gap: 14px;
+    }
+
+    /* Пресети щільності полів для розміщення максимального обсягу тексту */
+    body[data-density="compact"] {
+      --page-padding-y: 12mm;
+      --page-padding-x: 10mm;
+      --sidebar-padding-x: 10mm;
+      --font-scale: 90%;
+      --line-height-scale: 1.35;
+      --section-gap: 10px;
+    }
+
+    body[data-density="minimal"] {
+      --page-padding-y: 7mm;
+      --page-padding-x: 8mm;
+      --sidebar-padding-x: 8mm;
+      --font-scale: 82%;
+      --line-height-scale: 1.25;
+      --section-gap: 6px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: "Roboto", -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, Helvetica, sans-serif;
+      background-color: #0b0f17;
+      color: #1a202c;
+      line-height: var(--line-height-scale);
+      font-size: calc(13px * (var(--font-scale) / 100%));
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* ==========================================================================
+       Верхня панель інструментів (Toolbar)
+       ========================================================================== */
+    .screen-toolbar {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: #111827;
+      border-bottom: 1px solid #1f2937;
+      padding: 10px 20px;
+      color: #e5e7eb;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.45);
+    }
+
+    .toolbar-row-main {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .toolbar-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .toolbar-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #1e293b;
+      color: #93c5fd;
+      border: 1px solid #334155;
+      padding: 4px 10px;
+      border-radius: 9999px;
+      font-size: 12px;
+      font-weight: 500;
+    }
+
+    .toolbar-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    /* Другий рядок панелі: налаштування простору як в Excel */
+    .toolbar-row-excel {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 18px;
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px solid #1f2937;
+      font-size: 12px;
+      color: #cbd5e1;
+    }
+
+    .excel-tool-group {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .excel-label {
+      font-weight: 600;
+      color: #94a3b8;
+      text-transform: uppercase;
+      font-size: 10.5px;
+      letter-spacing: 0.05em;
+    }
+
+    .slider-control {
+      width: 95px;
+      accent-color: #3b82f6;
+      cursor: pointer;
+    }
+
+    .toggle-group {
+      display: inline-flex;
+      background: #0f172a;
+      border: 1px solid #334155;
+      border-radius: 6px;
+      overflow: hidden;
+    }
+
+    .toggle-btn {
+      background: transparent;
+      border: none;
+      color: #94a3b8;
+      padding: 4px 10px;
+      font-size: 11.5px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .toggle-btn:hover {
+      color: #ffffff;
+      background: #1e293b;
+    }
+
+    .toggle-btn.active {
+      background: #2563eb;
+      color: #ffffff;
+      font-weight: 600;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 14px;
+      border-radius: 6px;
+      font-size: 12.5px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      border: 1px solid transparent;
+      user-select: none;
+    }
+
+    .btn:active {
+      transform: scale(0.98);
+    }
+
+    .btn-primary {
+      background: #1d4ed8;
+      color: #ffffff;
+      border-color: #2563eb;
+    }
+    .btn-primary:hover {
+      background: #2563eb;
+    }
+
+    .btn-secondary {
+      background: #1e293b;
+      color: #e2e8f0;
+      border-color: #334155;
+    }
+    .btn-secondary:hover {
+      background: #334155;
+      color: #ffffff;
+    }
+
+    .btn-secondary.active {
+      background: #0284c7;
+      border-color: #38bdf8;
+      color: #ffffff;
+    }
+
+    .btn-excel {
+      background: #065f46;
+      color: #a7f3d0;
+      border-color: #059669;
+    }
+    .btn-excel:hover {
+      background: #047857;
+      color: #ffffff;
+    }
+    .btn-excel.active {
+      background: #10b981;
+      color: #064e3b;
+      font-weight: 700;
+      border-color: #34d399;
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: #94a3b8;
+      border-color: #374151;
+    }
+    .btn-outline:hover {
+      background: #1f2937;
+      color: #f87171;
+      border-color: #ef4444;
+    }
+
+    .btn-pptx {
+      background: #c2410c;
+      color: #fff7ed;
+      border-color: #ea580c;
+      font-weight: 600;
+    }
+    .btn-pptx:hover {
+      background: #ea580c;
+      color: #ffffff;
+      box-shadow: 0 2px 10px rgba(234, 88, 12, 0.45);
+    }
+    .btn-pptx:active {
+      background: #9a3412;
+    }
+    .btn-pptx.loading {
+      opacity: 0.7;
+      cursor: wait;
+      pointer-events: none;
+    }
+
+    /* Спливаюче повідомлення про успішний експорт PPTX */
+    .pptx-toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: #0f172a;
+      border: 1px solid #ea580c;
+      border-left: 4px solid #ea580c;
+      color: #f8fafc;
+      padding: 14px 18px;
+      border-radius: 8px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+      z-index: 5000;
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      max-width: 440px;
+      transform: translateY(120px);
+      opacity: 0;
+      transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      pointer-events: none;
+    }
+    .pptx-toast.show {
+      transform: translateY(0);
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .toast-icon {
+      font-size: 24px;
+      line-height: 1;
+      flex-shrink: 0;
+    }
+    .toast-content {
+      flex: 1;
+    }
+    .toast-title {
+      font-size: 13.5px;
+      font-weight: 700;
+      color: #fed7aa;
+      margin-bottom: 4px;
+    }
+    .toast-desc {
+      font-size: 12px;
+      color: #cbd5e1;
+      line-height: 1.45;
+    }
+    .toast-close {
+      background: transparent;
+      border: none;
+      color: #94a3b8;
+      font-size: 18px;
+      cursor: pointer;
+      line-height: 1;
+      padding: 0 0 0 8px;
+    }
+    .toast-close:hover {
+      color: #ffffff;
+    }
+
+    .save-status {
+      font-size: 11.5px;
+      color: #34d399;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .save-status.show {
+      opacity: 1;
+    }
+
+    /* Обгортка сторінки */
+    .page-wrapper {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 24px 15px 40px;
+      min-height: calc(100vh - 100px);
+    }
+
+    /* ==========================================================================
+       Контейнер А4 (210mm x 297mm)
+       ========================================================================== */
+    .resume-a4 {
+      width: 210mm;
+      min-height: 297mm;
+      height: 297mm;
+      max-height: 297mm;
+      display: flex;
+      background: #ffffff;
+      box-shadow: 0 12px 36px rgba(0, 0, 0, 0.55);
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* ==========================================================================
+       Стилі клітинок в стилі EXCEL (Excel Cell Grid & Resizing)
+       ========================================================================== */
+    .excel-cell {
+      position: relative;
+      transition: background-color 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+      min-height: 26px;
+    }
+
+    /* Режим "Сітка як в Excel" */
+    body.show-excel-grid .excel-cell {
+      outline: 1px dashed rgba(59, 130, 246, 0.35) !important;
+      background-color: rgba(59, 130, 246, 0.02);
+    }
+
+    body.show-excel-grid .sidebar .excel-cell {
+      outline: 1px dashed rgba(96, 165, 250, 0.35) !important;
+      background-color: rgba(96, 165, 250, 0.04);
+    }
+
+    /* Активна клітинка */
+    body.is-editing .excel-cell:hover {
+      background-color: rgba(59, 130, 246, 0.04);
+    }
+
+    body.is-editing .sidebar .excel-cell:hover {
+      background-color: rgba(96, 165, 250, 0.06);
+    }
+
+    /* Нижня лінійка розтягування рядка як в Excel (Row Resizer Bar) */
+    .cell-resizer-bottom {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: -4px;
+      height: 9px;
+      cursor: row-resize;
+      z-index: 40;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      user-select: none;
+    }
+
+    .cell-resizer-line {
+      width: 100%;
+      height: 2px;
+      background: transparent;
+      transition: background 0.15s ease;
+      position: relative;
+    }
+
+    .cell-resizer-handle {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: 28px;
+      height: 10px;
+      background: #1e293b;
+      border: 1px solid #64748b;
+      border-radius: 4px;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      color: #ffffff;
+      font-size: 8px;
+      line-height: 1;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+    }
+
+    body.is-editing .cell-resizer-bottom {
+      display: flex;
+    }
+
+    body.is-editing .excel-cell:hover .cell-resizer-line,
+    body.is-editing .cell-resizer-bottom:hover .cell-resizer-line,
+    .cell-resizer-bottom.dragging .cell-resizer-line {
+      background: #2563eb;
+    }
+
+    body.is-editing .excel-cell:hover .cell-resizer-handle,
+    body.is-editing .cell-resizer-bottom:hover .cell-resizer-handle,
+    .cell-resizer-bottom.dragging .cell-resizer-handle {
+      display: flex;
+      background: #2563eb;
+      border-color: #60a5fa;
+    }
+
+    /* Кутовий маніпулятор розтягування 2D (Corner Resizer Handle) */
+    .cell-resizer-corner {
+      position: absolute;
+      right: -2px;
+      bottom: -2px;
+      width: 12px;
+      height: 12px;
+      cursor: se-resize;
+      z-index: 42;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      user-select: none;
+      opacity: 0.5;
+      transition: opacity 0.15s ease;
+    }
+
+    .cell-resizer-corner svg {
+      width: 9px;
+      height: 9px;
+      fill: #2563eb;
+    }
+
+    body.is-editing .excel-cell:hover .cell-resizer-corner {
+      display: flex;
+      opacity: 1;
+    }
+
+    /* Індикатор висоти під час перетягування (Tooltip) */
+    .resize-tooltip {
+      position: fixed;
+      background: #111827;
+      color: #38bdf8;
+      border: 1px solid #334155;
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 600;
+      pointer-events: none;
+      z-index: 3000;
+      display: none;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+    }
+
+    /* ==========================================================================
+       Інтерактивний вертикальний розділювач колонок (Column Splitter)
+       ========================================================================== */
+    .column-splitter {
+      width: 6px;
+      background: #1e293b;
+      cursor: col-resize;
+      position: relative;
+      z-index: 50;
+      transition: background 0.15s ease;
+      user-select: none;
+      flex-shrink: 0;
+    }
+
+    .column-splitter::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 2px;
+      height: 32px;
+      background: #64748b;
+      border-radius: 2px;
+    }
+
+    body.is-editing .column-splitter:hover,
+    body.is-editing .column-splitter.dragging {
+      background: #3b82f6;
+    }
+    body.is-editing .column-splitter:hover::after,
+    body.is-editing .column-splitter.dragging::after {
+      background: #ffffff;
+    }
+
+    /* ==========================================================================
+       Стилі режиму редагування вмісту (contenteditable)
+       ========================================================================== */
+    body.is-editing [contenteditable="true"] {
+      outline: none;
+      transition: background-color 0.15s ease, box-shadow 0.15s ease;
+      border-radius: 3px;
+      cursor: text;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    body.is-editing [contenteditable="true"]:hover {
+      background-color: rgba(59, 130, 246, 0.12);
+      box-shadow: 0 0 0 1px rgba(59, 130, 246, 0.4);
+    }
+
+    body.is-editing [contenteditable="true"]:focus {
+      background-color: rgba(59, 130, 246, 0.18);
+      box-shadow: 0 0 0 1.5px #3b82f6;
+    }
+
+    body.is-editing .sidebar [contenteditable="true"]:hover {
+      background-color: rgba(96, 165, 250, 0.18);
+      box-shadow: 0 0 0 1px rgba(96, 165, 250, 0.5);
+    }
+
+    body.is-editing .sidebar [contenteditable="true"]:focus {
+      background-color: rgba(96, 165, 250, 0.25);
+      box-shadow: 0 0 0 1.5px #60a5fa;
+    }
+
+    /* Кнопки додавання та видалення елементів списку */
+    .item-delete-btn {
+      display: none;
+      position: absolute;
+      right: -3px;
+      top: -3px;
+      width: 17px;
+      height: 17px;
+      background: #ef4444;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      font-size: 11px;
+      line-height: 1;
+      cursor: pointer;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+      z-index: 45;
+      transition: transform 0.1s ease, background 0.15s ease;
+    }
+
+    .item-delete-btn:hover {
+      background: #dc2626;
+      transform: scale(1.15);
+    }
+
+    body.is-editing .excel-cell:hover .item-delete-btn {
+      display: flex;
+    }
+
+    .btn-add-item {
+      display: none;
+      align-items: center;
+      gap: 4px;
+      margin-top: 5px;
+      padding: 3px 8px;
+      font-size: 10px;
+      font-weight: 600;
+      border-radius: 4px;
+      cursor: pointer;
+      border: 1px dashed;
+      background: transparent;
+      width: fit-content;
+      transition: all 0.15s ease;
+    }
+
+    body.is-editing .btn-add-item {
+      display: inline-flex;
+    }
+
+    .sidebar .btn-add-item {
+      color: #93c5fd;
+      border-color: rgba(147, 197, 253, 0.4);
+    }
+    .sidebar .btn-add-item:hover {
+      background: rgba(147, 197, 253, 0.15);
+      border-color: #93c5fd;
+      color: #ffffff;
+    }
+
+    .main-content .btn-add-item {
+      color: #1d4ed8;
+      border-color: rgba(29, 78, 216, 0.4);
+    }
+    .main-content .btn-add-item:hover {
+      background: rgba(29, 78, 216, 0.08);
+      border-color: #1d4ed8;
+    }
+
+    /* ==========================================================================
+       Ліва колонка: Сайдбар (33% за замовчуванням)
+       ========================================================================== */
+    .sidebar {
+      width: var(--sidebar-width);
+      background-color: #0c1829;
+      color: #ffffff;
+      padding: var(--page-padding-y) var(--sidebar-padding-x) calc(var(--page-padding-y) * 0.8) var(--sidebar-padding-x);
+      display: flex;
+      flex-direction: column;
+      gap: var(--section-gap);
+      border-right: 1px solid #16263d;
+      flex-shrink: 0;
+    }
+
+    /* Фото placeholder та аватар з підтримкою центрування та зуму */
+    .photo-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 2px;
+      position: relative;
+    }
+
+    .photo-container {
+      width: var(--photo-size, clamp(74px, 9vw, 98px));
+      height: var(--photo-size, clamp(74px, 9vw, 98px));
+      border-radius: var(--photo-radius, 50%);
+      background: #1e293b;
+      border: 2px solid #334155;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: #94a3b8;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      padding: 0;
+      box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.4);
+      position: relative;
+      cursor: pointer;
+      overflow: hidden;
+      transition: border-color 0.2s ease, border-radius 0.2s ease, width 0.2s ease, height 0.2s ease;
+      user-select: none;
+    }
+
+    .photo-container:hover {
+      border-color: #3b82f6;
+    }
+
+    .photo-container.has-photo {
+      cursor: grab;
+    }
+
+    .photo-container.has-photo.dragging {
+      cursor: grabbing !important;
+    }
+
+    /* Підказка щодо перетягування для центрування на фото */
+    .photo-drag-badge {
+      display: none;
+      position: absolute;
+      bottom: 4px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(15, 23, 42, 0.85);
+      backdrop-filter: blur(4px);
+      color: #ffffff;
+      font-size: 9px;
+      font-weight: 600;
+      padding: 2px 6px;
+      border-radius: 10px;
+      pointer-events: none;
+      white-space: nowrap;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      z-index: 10;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+    }
+
+    body.is-editing .photo-container.has-photo:hover .photo-drag-badge {
+      display: block;
+    }
+
+    .photo-preview {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: inherit;
+      display: none;
+      transform: translate(var(--photo-x, 0px), var(--photo-y, 0px)) scale(calc(var(--photo-zoom, 100) / 100));
+      transform-origin: center center;
+      user-select: none;
+      -webkit-user-drag: none;
+      pointer-events: none;
+      transition: transform 0.05s ease-out;
+    }
+
+    .photo-placeholder-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 4px;
+    }
+
+    .photo-placeholder-content svg {
+      width: 26px;
+      height: 26px;
+      fill: none;
+      stroke: #64748b;
+      stroke-width: 1.8;
+      margin-bottom: 3px;
+    }
+
+    .photo-actions {
+      display: none;
+      gap: 5px;
+      margin-top: 6px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    body.is-editing .photo-actions {
+      display: flex;
+    }
+
+    .btn-photo-mini {
+      font-size: 10px;
+      background: #1e293b;
+      color: #94a3b8;
+      border: 1px solid #334155;
+      padding: 2px 6px;
+      border-radius: 4px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      transition: all 0.15s ease;
+      white-space: nowrap;
+    }
+    .btn-photo-mini:hover {
+      color: #ffffff;
+      background: #334155;
+    }
+    .btn-photo-mini.btn-photo-center {
+      background: #1e3a8a;
+      color: #bfdbfe;
+      border-color: #3b82f6;
+    }
+    .btn-photo-mini.btn-photo-center:hover {
+      background: #2563eb;
+      color: #ffffff;
+    }
+
+    /* Заголовки блоків у сайдбарі */
+    .sidebar-section-title {
+      font-size: 11.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #ffffff;
+      padding-bottom: 3px;
+      border-bottom: 1.5px solid #2563eb;
+      margin-bottom: 6px;
+    }
+
+    /* Контакти */
+    .contact-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .contact-item {
+      display: flex;
+      flex-direction: column;
+      font-size: 11px;
+      line-height: 1.32;
+      padding-right: 14px;
+      padding-bottom: 3px;
+    }
+
+    .contact-label {
+      font-size: 9.5px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #94a3b8;
+      font-weight: 600;
+    }
+
+    .contact-value {
+      color: #f1f5f9;
+      word-break: break-all;
+      text-decoration: underline;
+      text-decoration-color: rgba(255, 255, 255, 0.3);
+      text-underline-offset: 2px;
+      transition: color 0.15s ease;
+    }
+
+    .contact-value:hover {
+      color: #60a5fa;
+    }
+
+    /* Навички */
+    .skills-group {
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+    }
+
+    .skill-block {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+      padding-right: 14px;
+      padding-bottom: 3px;
+    }
+
+    .skill-name {
+      font-size: 11px;
+      font-weight: 600;
+      color: #60a5fa;
+      letter-spacing: 0.01em;
+    }
+
+    .skill-desc {
+      font-size: 10.5px;
+      color: #cbd5e1;
+      line-height: 1.32;
+    }
+
+    /* Посилання */
+    .links-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .link-item {
+      display: flex;
+      flex-direction: column;
+      font-size: 10.5px;
+      padding-right: 14px;
+      padding-bottom: 3px;
+    }
+
+    .link-title {
+      font-size: 9.5px;
+      font-weight: 600;
+      text-transform: uppercase;
+      color: #94a3b8;
+      letter-spacing: 0.04em;
+    }
+
+    .link-url-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .link-url {
+      color: #93c5fd;
+      text-decoration: underline;
+      text-decoration-color: rgba(147, 197, 253, 0.4);
+      text-underline-offset: 2px;
+      word-break: break-all;
+      cursor: pointer;
+      transition: color 0.15s ease;
+    }
+
+    .link-url:hover {
+      color: #bfdbfe;
+    }
+
+    .btn-edit-url {
+      display: none;
+      background: transparent;
+      border: none;
+      color: #64748b;
+      cursor: pointer;
+      padding: 1px;
+      font-size: 10px;
+    }
+    body.is-editing .link-item:hover .btn-edit-url {
+      display: inline-flex;
+    }
+    .btn-edit-url:hover {
+      color: #38bdf8;
+    }
+
+    /* ==========================================================================
+       Права колонка: Основна частина (67% за замовчуванням)
+       ========================================================================== */
+    .main-content {
+      flex: 1;
+      background-color: #ffffff;
+      color: #1e293b;
+      padding: var(--page-padding-y) var(--page-padding-x) calc(var(--page-padding-y) * 0.8) var(--page-padding-x);
+      display: flex;
+      flex-direction: column;
+      gap: var(--section-gap);
+      min-width: 0;
+    }
+
+    /* Заголовок та ПІБ */
+    .header-section {
+      border-bottom: 2px solid #0c1829;
+      padding-bottom: 8px;
+    }
+
+    .candidate-name {
+      font-size: calc(23px * (var(--font-scale) / 100%));
+      font-weight: 800;
+      line-height: 1.15;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: #0c1829;
+      margin-bottom: 4px;
+    }
+
+    .candidate-status {
+      font-size: calc(13px * (var(--font-scale) / 100%));
+      font-weight: 600;
+      color: #1d4ed8;
+      letter-spacing: 0.02em;
+    }
+
+    /* Заголовки блоків в основній частині */
+    .section-title {
+      font-size: calc(12.5px * (var(--font-scale) / 100%));
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #0c1829;
+      padding-bottom: 3px;
+      border-bottom: 1.5px solid #0c1829;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .section-title::before {
+      content: "";
+      display: inline-block;
+      width: 7px;
+      height: 7px;
+      background-color: #1d4ed8;
+      flex-shrink: 0;
+    }
+
+    /* Блок: Цілі */
+    .goals-text {
+      font-size: calc(12px * (var(--font-scale) / 100%));
+      color: #334155;
+      text-align: justify;
+      line-height: var(--line-height-scale);
+      padding-bottom: 4px;
+    }
+
+    /* Блок: Освіта */
+    .education-item {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      padding-right: 18px;
+      padding-bottom: 5px;
+    }
+
+    .edu-title {
+      font-size: calc(13px * (var(--font-scale) / 100%));
+      font-weight: 700;
+      color: #0f172a;
+    }
+
+    .edu-sub {
+      font-size: calc(12px * (var(--font-scale) / 100%));
+      font-weight: 600;
+      color: #2563eb;
+    }
+
+    .edu-period {
+      font-size: calc(11px * (var(--font-scale) / 100%));
+      font-weight: 500;
+      color: #64748b;
+      margin-top: 1px;
+    }
+
+    .edu-note {
+      font-size: calc(11.5px * (var(--font-scale) / 100%));
+      color: #475569;
+      margin-top: 2px;
+      line-height: var(--line-height-scale);
+    }
+
+    /* Блок: Досягнення */
+    .achievements-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .achievement-item {
+      position: relative;
+      padding-left: 14px;
+      padding-right: 18px;
+      padding-bottom: 4px;
+      font-size: calc(12px * (var(--font-scale) / 100%));
+      line-height: var(--line-height-scale);
+      color: #334155;
+    }
+
+    .achievement-item::before {
+      content: "▪";
+      position: absolute;
+      left: 0;
+      top: -1px;
+      color: #1d4ed8;
+      font-size: 13px;
+    }
+
+    .achievement-item strong {
+      color: #0f172a;
+      font-weight: 600;
+    }
+
+    /* Нижній офіційний колонтитул */
+    .document-footer {
+      margin-top: auto;
+      padding-top: 6px;
+      border-top: 1px solid #e2e8f0;
+      display: flex;
+      justify-content: space-between;
+      font-size: 9px;
+      color: #94a3b8;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    /* Модальне вікно для редагування посилань */
+    .url-modal-backdrop {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.65);
+      z-index: 2000;
+      align-items: center;
+      justify-content: center;
+    }
+    .url-modal-backdrop.open {
+      display: flex;
+    }
+    .url-modal {
+      background: #1e293b;
+      border: 1px solid #334155;
+      border-radius: 8px;
+      padding: 20px;
+      width: 380px;
+      max-width: 90vw;
+      color: #ffffff;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+    }
+    .url-modal h3 {
+      font-size: 14px;
+      margin-bottom: 12px;
+      font-weight: 600;
+    }
+    .url-modal label {
+      font-size: 11px;
+      color: #94a3b8;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+      display: block;
+    }
+    .url-modal input {
+      width: 100%;
+      padding: 8px 10px;
+      background: #0f172a;
+      border: 1px solid #334155;
+      border-radius: 4px;
+      color: #ffffff;
+      font-size: 12px;
+      margin-bottom: 12px;
+      outline: none;
+    }
+    .url-modal input:focus {
+      border-color: #3b82f6;
+    }
+    .url-modal-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    /* Стилі вікна центрування та налаштування фото (у стилі Telegram) */
+    .photo-adjust-modal {
+      width: 580px;
+      max-width: 95vw;
+      padding: 0;
+      background: #111827;
+      border: 1px solid #334155;
+      border-radius: 12px;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .photo-modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 20px;
+      background: #1e293b;
+      border-bottom: 1px solid #334155;
+    }
+
+    .photo-modal-header h3 {
+      font-size: 14px;
+      font-weight: 600;
+      margin: 0;
+      color: #f8fafc;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .photo-modal-close {
+      background: transparent;
+      border: none;
+      color: #94a3b8;
+      font-size: 22px;
+      line-height: 1;
+      cursor: pointer;
+      padding: 2px 6px;
+      border-radius: 6px;
+      transition: all 0.15s ease;
+    }
+    .photo-modal-close:hover {
+      color: #ffffff;
+      background: #334155;
+    }
+
+    .photo-modal-body {
+      padding: 16px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    /* Telegram-style Stage */
+    .photo-tg-stage-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .photo-tg-stage {
+      width: 100%;
+      height: 320px;
+      background: #030712;
+      border-radius: 8px;
+      border: 1px solid #1f2937;
+      position: relative;
+      overflow: hidden;
+      cursor: grab;
+      user-select: none;
+      touch-action: none;
+      box-shadow: inset 0 2px 10px rgba(0,0,0,0.8);
+    }
+
+    .photo-tg-stage.dragging {
+      cursor: grabbing !important;
+    }
+
+    /* Full original photo layer inside Telegram stage */
+    .photo-tg-full-img {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform-origin: center center;
+      pointer-events: none;
+      user-select: none;
+      -webkit-user-drag: none;
+      max-width: none;
+      max-height: none;
+    }
+
+    /* Dimmed overlay with circular cut-out viewport (Telegram style) */
+    .photo-tg-mask-overlay {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 5;
+    }
+
+    /* Circular viewport ring */
+    .photo-tg-target-ring {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: 200px;
+      height: 200px;
+      border-radius: var(--photo-radius, 50%);
+      border: 2px solid #38bdf8;
+      box-shadow: 0 0 0 9999px rgba(3, 7, 18, 0.72);
+      pointer-events: none;
+      transition: border-radius 0.2s ease;
+    }
+
+    /* Grid overlay inside the ring like in photo editors */
+    .photo-tg-grid {
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      pointer-events: none;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      grid-template-rows: 1fr 1fr 1fr;
+      opacity: 0.35;
+    }
+    .photo-tg-grid > div {
+      border: 0.5px dashed rgba(255, 255, 255, 0.4);
+    }
+
+    .photo-modal-hint {
+      font-size: 11.5px;
+      color: #94a3b8;
+      text-align: center;
+      line-height: 1.4;
+      background: rgba(30, 41, 59, 0.4);
+      padding: 6px 12px;
+      border-radius: 6px;
+      border: 1px solid #1e293b;
+      width: 100%;
+    }
+
+    .photo-modal-controls {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      background: #0f172a;
+      border: 1px solid #1e293b;
+      padding: 14px;
+      border-radius: 8px;
+    }
+
+    .photo-control-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .photo-control-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 11px;
+      color: #cbd5e1;
+      font-weight: 600;
+    }
+
+    .photo-badge {
+      background: #1e293b;
+      color: #38bdf8;
+      border: 1px solid #334155;
+      padding: 1px 7px;
+      border-radius: 10px;
+      font-size: 10.5px;
+      font-family: monospace;
+    }
+
+    .photo-zoom-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .photo-zoom-row input[type="range"] {
+      flex: 1;
+      height: 6px;
+      border-radius: 3px;
+      background: #334155;
+      outline: none;
+      accent-color: #38bdf8;
+      cursor: pointer;
+      margin: 0;
+    }
+
+    .btn-ctrl-step {
+      width: 26px;
+      height: 26px;
+      background: #1e293b;
+      border: 1px solid #475569;
+      color: #ffffff;
+      border-radius: 4px;
+      font-size: 14px;
+      line-height: 1;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.15s ease;
+    }
+    .btn-ctrl-step:hover {
+      background: #0284c7;
+      border-color: #38bdf8;
+    }
+
+    /* Джойстик тонкого центрування та пресети */
+    .photo-dpad-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .photo-dpad {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+    }
+
+    .dpad-mid-row {
+      display: flex;
+      align-items: center;
+      gap: 3px;
+    }
+
+    .dpad-btn {
+      width: 28px;
+      height: 28px;
+      background: #1e293b;
+      border: 1px solid #334155;
+      color: #cbd5e1;
+      border-radius: 4px;
+      font-size: 11px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.15s ease;
+    }
+    .dpad-btn:hover {
+      background: #0284c7;
+      color: #ffffff;
+      border-color: #38bdf8;
+    }
+    .dpad-btn.dpad-center {
+      background: #0f172a;
+      border-color: #0284c7;
+      color: #38bdf8;
+      font-size: 12px;
+    }
+    .dpad-btn.dpad-center:hover {
+      background: #0369a1;
+      color: #ffffff;
+    }
+
+    .photo-presets {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      flex: 1;
+      min-width: 160px;
+    }
+
+    .btn-preset {
+      background: #1e293b;
+      color: #cbd5e1;
+      border: 1px solid #334155;
+      padding: 5px 10px;
+      border-radius: 4px;
+      font-size: 11px;
+      cursor: pointer;
+      text-align: left;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.15s ease;
+    }
+    .btn-preset:hover {
+      background: #334155;
+      color: #ffffff;
+      border-color: #38bdf8;
+    }
+
+    .photo-options-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .photo-options-grid-3 {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1.3fr;
+      gap: 12px;
+    }
+
+    .photo-res-badge {
+      display: inline-block;
+      font-size: 10px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      color: #38bdf8;
+      background: rgba(56, 189, 248, 0.12);
+      border: 1px solid rgba(56, 189, 248, 0.25);
+      padding: 1px 6px;
+      border-radius: 4px;
+      margin-left: 6px;
+      font-weight: 500;
+    }
+
+    .sub-label {
+      font-size: 10.5px;
+      color: #94a3b8;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-bottom: 4px;
+      display: block;
+    }
+
+    .toggle-group-sm .toggle-btn {
+      padding: 3px 8px;
+      font-size: 10.5px;
+    }
+
+    .photo-modal-actions {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 20px;
+      background: #1e293b;
+      border-top: 1px solid #334155;
+    }
+
+    /* Стилі для автоцентрування обличчя та рамки наведення */
+    .photo-face-status-success {
+      background: rgba(16, 185, 129, 0.2) !important;
+      color: #34d399 !important;
+      border: 1px solid rgba(52, 211, 153, 0.45) !important;
+    }
+    .photo-face-status-searching {
+      background: rgba(56, 189, 248, 0.2) !important;
+      color: #38bdf8 !important;
+      border: 1px solid rgba(56, 189, 248, 0.45) !important;
+    }
+    .photo-face-guide-box {
+      position: absolute;
+      border: 2px dashed #34d399;
+      border-radius: 6px;
+      pointer-events: none;
+      z-index: 6;
+      transition: all 0.12s ease;
+      box-shadow: 0 0 12px rgba(52, 211, 153, 0.4);
+    }
+    .photo-face-guide-tag {
+      position: absolute;
+      top: -18px;
+      left: 0;
+      background: #059669;
+      color: #ffffff;
+      font-size: 9px;
+      font-weight: 700;
+      padding: 1px 5px;
+      border-radius: 3px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .btn-preset.btn-preset-ai {
+      background: linear-gradient(135deg, rgba(14, 116, 144, 0.35), rgba(16, 185, 129, 0.35));
+      border: 1px solid #10b981;
+      color: #6ee7b7;
+      font-weight: 600;
+    }
+    .btn-preset.btn-preset-ai:hover {
+      background: linear-gradient(135deg, rgba(14, 116, 144, 0.55), rgba(16, 185, 129, 0.55));
+      border-color: #34d399;
+      color: #ffffff;
+      box-shadow: 0 0 10px rgba(16, 185, 129, 0.35);
+    }
+    .btn-preset.btn-preset-ai.loading {
+      opacity: 0.7;
+      cursor: wait;
+    }
+    .btn-photo-auto-face {
+      background: rgba(16, 185, 129, 0.18) !important;
+      border-color: #10b981 !important;
+      color: #6ee7b7 !important;
+    }
+    .btn-photo-auto-face:hover {
+      background: #059669 !important;
+      color: #ffffff !important;
+    }
+    .photo-container.drag-over {
+      border-color: #10b981 !important;
+      background: rgba(16, 185, 129, 0.15) !important;
+      transform: scale(1.04);
+    }
+    .photo-sublabel-hint {
+      font-size: 8px;
+      color: #94a3b8;
+      text-align: center;
+      line-height: 1.1;
+      max-width: 80px;
+      margin-top: 2px;
+      pointer-events: none;
+    }
+    .auto-face-toast {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      background: #0f172a;
+      color: #f8fafc;
+      border: 1px solid #38bdf8;
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.7), 0 0 15px rgba(56, 189, 248, 0.25);
+      padding: 10px 18px;
+      border-radius: 8px;
+      font-size: 12.5px;
+      font-weight: 600;
+      z-index: 10000;
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .auto-face-toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    /* ==========================================================================
+       Стилі для друку та збереження в PDF (@media print)
+       ========================================================================== */
+    @page {
+      size: A4 portrait;
+      margin: 0;
+    }
+
+    @media print {
+      html, body {
+        width: 210mm;
+        height: 297mm;
+        margin: 0 !important;
+        padding: 0 !important;
+        background: none !important;
+        overflow: hidden !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+      }
+
+      .no-print,
+      .item-delete-btn,
+      .btn-add-item,
+      .photo-actions,
+      .photo-drag-badge,
+      .btn-edit-url,
+      .screen-toolbar,
+      .column-splitter,
+      .cell-resizer-bottom,
+      .cell-resizer-corner,
+      .resize-tooltip,
+      .url-modal-backdrop {
+        display: none !important;
+      }
+
+      .page-wrapper {
+        padding: 0 !important;
+        margin: 0 !important;
+        min-height: auto !important;
+        display: block !important;
+      }
+
+      .resume-a4 {
+        width: 210mm !important;
+        height: 297mm !important;
+        min-height: 297mm !important;
+        max-height: 297mm !important;
+        box-shadow: none !important;
+        margin: 0 !important;
+        page-break-after: avoid !important;
+        page-break-inside: avoid !important;
+        overflow: hidden !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+      }
+
+      .sidebar {
+        background-color: #0c1829 !important;
+        color: #ffffff !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+      }
+
+      .main-content {
+        background-color: #ffffff !important;
+        color: #1e293b !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+      }
+
+      a {
+        text-decoration: underline !important;
+      }
+
+      .sidebar a {
+        color: #93c5fd !important;
+        text-decoration-color: #60a5fa !important;
+      }
+
+      [contenteditable] {
+        outline: none !important;
+        box-shadow: none !important;
+        background: none !important;
+      }
+
+      .excel-cell {
+        outline: none !important;
+        background: none !important;
+      }
+    }
+  </style>
+</head>
+<body class="is-editing" data-density="standard">
+
+  <!-- Плаваючий індикатор розміру під час перетягування -->
+  <div id="resize-tooltip" class="resize-tooltip">Висота рядка: 45px</div>
+
+  <!-- Верхня панель інструментів та розтягування полів -->
+  <div class="screen-toolbar no-print">
+    <div class="toolbar-row-main">
+      <div class="toolbar-left">
+        <div class="toolbar-badge">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 20h9"></path>
+            <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
+          </svg>
+          Режим редагування (Excel-розтягування активне)
+        </div>
+        <span id="save-indicator" class="save-status">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+          Автозбережено
+        </span>
+      </div>
+
+      <div class="toolbar-actions">
+        <button class="btn btn-excel" id="btn-toggle-grid" onclick="toggleExcelGrid()" title="Показати межі кожної клітинки як в таблиці Excel">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+            <line x1="3" y1="9" x2="21" y2="9"></line>
+            <line x1="3" y1="15" x2="21" y2="15"></line>
+            <line x1="9" y1="3" x2="9" y2="21"></line>
+            <line x1="15" y1="3" x2="15" y2="21"></line>
+          </svg>
+          <span id="excel-grid-text">Сітка Excel</span>
+        </button>
+
+        <button class="btn btn-secondary" id="btn-toggle-preview" onclick="toggleEditMode()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+            <circle cx="12" cy="12" r="3"></circle>
+          </svg>
+          <span id="preview-text">Попередній перегляд</span>
+        </button>
+
+        <button class="btn btn-outline" onclick="resetToDefault()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="1 4 1 10 7 10"></polyline>
+            <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path>
+          </svg>
+          Скинути
+        </button>
+
+        <button class="btn btn-primary" onclick="window.print()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="6 9 6 2 18 2 18 9"></polyline>
+            <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
+            <rect x="6" y="14" width="12" height="8"></rect>
+          </svg>
+          Друк / Зберегти в PDF
+        </button>
+
+        <button class="btn btn-pptx" id="btn-export-pptx" onclick="exportToPPTX()" title="Експортувати в слайд PowerPoint (.pptx) з повністю інтерактивним та редагованим текстом">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-9 11.5v-7h3c1.38 0 2.5 1.12 2.5 2.5s-1.12 2.5-2.5 2.5h-1.5v2H10zm1.5-3.5h1.5c.55 0 1-.45 1-1s-.45-1-1-1h-1.5v2z"/>
+          </svg>
+          <span id="pptx-btn-text">Експорт в PowerPoint (.pptx)</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Другий поверх панелі: точне розтягування рядків, колонок і тексту -->
+    <div class="toolbar-row-excel">
+      <div class="excel-tool-group">
+        <span class="excel-label">Місткість тексту:</span>
+        <div class="toggle-group">
+          <button class="toggle-btn active" id="btn-density-standard" onclick="setDensity('standard')">Стандарт</button>
+          <button class="toggle-btn" id="btn-density-compact" onclick="setDensity('compact')">Компактні поля</button>
+          <button class="toggle-btn" id="btn-density-minimal" onclick="setDensity('minimal')">Максимум тексту</button>
+        </div>
+      </div>
+
+      <div class="excel-tool-group">
+        <span class="excel-label">Ширина колонок:</span>
+        <input type="range" id="sidebar-width-slider" class="slider-control" min="22" max="46" value="33" oninput="updateSidebarWidth(this.value)">
+        <span id="sidebar-width-value" style="font-size: 11px; min-width: 30px;">33%</span>
+      </div>
+
+      <div class="excel-tool-group">
+        <span class="excel-label">Масштаб шрифту:</span>
+        <input type="range" id="font-scale-slider" class="slider-control" min="75" max="115" value="100" oninput="updateFontScale(this.value)">
+        <span id="font-scale-value" style="font-size: 11px; min-width: 34px;">100%</span>
+      </div>
+
+      <div class="excel-tool-group" style="color: #94a3b8; font-size: 11px;">
+        <span>🎯 <strong>Як в Excel:</strong> наведіть курсор на нижню межу будь-якої клітинки, потягніть вниз для збільшення висоти або двічі клікніть для авто-підгону!</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Прихований інпут для завантаження власного фото -->
+  <input type="file" id="photo-file-input" accept="image/*" style="display: none;" onchange="handlePhotoUpload(event)">
+
+  <div class="page-wrapper">
+    <div class="resume-a4" id="resume-container">
+      
+      <!-- ЛІВА КОЛОНКА (САЙДБАР) -->
+      <aside class="sidebar" id="sidebar-col">
+        <!-- Фото placeholder / аватар -->
+        <div class="photo-wrapper excel-cell" id="cell-photo">
+          <div class="photo-container" id="photo-box" onclick="onPhotoBoxClick(event)" title="Перетягуйте мишкою для центрування обличчя або натисніть для завантаження">
+            <img id="user-photo-img" class="photo-preview" alt="Фото кандидата" draggable="false" />
+            <div id="photo-placeholder-content" class="photo-placeholder-content">
+              <svg viewBox="0 0 24 24">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                <circle cx="12" cy="7" r="4"></circle>
+              </svg>
+              <span id="photo-label-text" contenteditable="true" spellcheck="false">Місце для фото</span>
+              <span class="photo-sublabel-hint no-print">Клікніть або перетягніть фото</span>
+            </div>
+            <div class="photo-drag-badge no-print" id="photo-drag-badge">✥ Центрувати</div>
+          </div>
+          <div class="photo-actions no-print">
+            <button class="btn-photo-mini" onclick="triggerPhotoUpload()" title="Вибрати інше фото">📸 Змінити</button>
+            <button class="btn-photo-mini btn-photo-center" id="btn-adjust-photo" style="display: none;" onclick="openPhotoAdjustModal()" title="Налаштувати центрування обличчя та зум">🎯 Центрувати</button>
+            <button class="btn-photo-mini btn-photo-auto-face" id="btn-auto-face" style="display: none;" onclick="autoFitAndCenterFace({ showToast: true })" title="Автоматично виявити обличчя та відцентрувати">👤 Авто-обличчя</button>
+            <button class="btn-photo-mini" id="btn-remove-photo" style="display: none;" onclick="removePhoto()" title="Видалити фото">🗑️</button>
+          </div>
+        </div>
+
+        <!-- Контакти -->
+        <section id="section-contacts" class="excel-cell">
+          <h2 class="sidebar-section-title" contenteditable="true" spellcheck="false">Контакти</h2>
+          <ul class="contact-list" id="contact-list">
+            <li class="contact-item excel-cell">
+              <span class="contact-label" contenteditable="true" spellcheck="false">Телефон</span>
+              <a href="tel:+380000000000" class="contact-value" id="contact-phone" contenteditable="true" spellcheck="false" title="Зателефонувати">+380 (XX) XXX-XX-XX</a>
+              <button class="item-delete-btn no-print" onclick="deleteItem(this)" title="Видалити клітинку">×</button>
+            </li>
+            <li class="contact-item excel-cell">
+              <span class="contact-label" contenteditable="true" spellcheck="false">Email</span>
+              <a href="mailto:m.shekhovtsov@example.com" class="contact-value" id="contact-email" contenteditable="true" spellcheck="false" title="Надіслати листа">m.shekhovtsov@example.com</a>
+              <button class="item-delete-btn no-print" onclick="deleteItem(this)" title="Видалити клітинку">×</button>
+            </li>
+            <li class="contact-item excel-cell">
+              <span class="contact-label" contenteditable="true" spellcheck="false">Telegram</span>
+              <a href="https://t.me/shekhovtsov_m" target="_blank" rel="noopener noreferrer" class="contact-value" id="contact-telegram" contenteditable="true" spellcheck="false" title="Відкрити в Telegram">@shekhovtsov_m</a>
+              <button class="item-delete-btn no-print" onclick="deleteItem(this)" title="Видалити клітинку">×</button>
+            </li>
+            <li class="contact-item excel-cell">
+              <span class="contact-label" contenteditable="true" spellcheck="false">Локація</span>
+              <span class="contact-value" contenteditable="true" spellcheck="false">Україна</span>
+              <button class="item-delete-btn no-print" onclick="deleteItem(this)" title="Видалити клітинку">×</button>
+            </li>
+          </ul>
+          <button class="btn-add-item no-print" onclick="addContactItem()">+ Додати контакт</button>
+        </section>
+
+        <!-- Навички -->
+        <section id="section-skills" class="excel-cell">
+          <h2 class="sidebar-section-title" contenteditable="true" spellcheck="false">Навички</h2>
+          <div class="skills-group" id="skills-group">
+            <div class="skill-block excel-cell">
+              <div class="skill-name" contenteditable="true" spellcheck="false">Програмування</div>
+              <div class="skill-desc" contenteditable="true" spellcheck="false">Python (PyCryptodome, pwntools)</div>
+              <button class="item-delete-btn no-print" onclick="deleteItem(this)" title="Видалити клітинку">×</button>
+            </div>
+
+            <div class="skill-block excel-cell">
+              <div class="skill-name" contenteditable="true" spellcheck="false">OSINT</div>
+              <div class="skill-desc" contenteditable="true" spellcheck="false">Аналіз цифрового сліду, розвідка за відкритими джерелами</div>
+              <button class="item-delete-btn no-print" onclick="deleteItem(this)" title="Видалити клітинку">×</button>
+            </div>
+
+            <div class="skill-block excel-cell">
+              <div class="skill-name" contenteditable="true" spellcheck="false">Криптографія</div>
+              <div class="skill-desc" contenteditable="true" spellcheck="false">Вирішення завдань (CryptoHack), аналіз алгоритмів (RSA, XOR, еліптичні криві)</div>
+              <button class="item-delete-btn no-print" onclick="deleteItem(this)" title="Видалити клітинку">×</button>
+            </div>
+
+            <div class="skill-block excel-cell">
+              <div class="skill-name" contenteditable="true" spellcheck="false">Бази даних та бекенд</div>
+              <div class="skill-desc" contenteditable="true" spellcheck="false">Google Firebase, Firestore</div>
+              <button class="item-delete-btn no-print" onclick="deleteItem(this)" title="Видалити клітинку">×</button>
+            </div>
+
+            <div class="skill-block excel-cell">
+              <div class="skill-name" contenteditable="true" spellcheck="false">ОС та адміністрування</div>
+              <div class="skill-desc" contenteditable="true" spellcheck="false">Оптимізація та адміністрування ОС (Linux / Windows)</div>
+              <button class="item-delete-btn no-print" onclick="deleteItem(this)" title="Видалити клітинку">×</button>
+            </div>
+          </div>
+          <button class="btn-add-item no-print" onclick="addSkillItem()">+ Додати навичку</button>
+        </section>
+
+        <!-- Посилання -->
+        <section id="section-links" class="excel-cell">
+          <h2 class="sidebar-section-title" contenteditable="true" spellcheck="false">Посилання</h2>
+          <ul class="links-list" id="links-list">
+            <li class="link-item excel-cell">
+              <span class="link-title" contenteditable="true" spellcheck="false">GitHub</span>
+              <div class="link-url-wrapper">
+                <a href="https://github.com/shekhovtsov" target="_blank" rel="noopener noreferrer" class="link-url" contenteditable="true" spellcheck="false">github.com/shekhovtsov</a>
+                <button class="btn-edit-url no-print" onclick="openUrlEditor(this)" title="Змінити URL-адресу">🔗</button>
+              </div>
+              <button class="item-delete-btn no-print" onclick="deleteItem(this)" title="Видалити клітинку">×</button>
+            </li>
+            <li class="link-item excel-cell">
+              <span class="link-title" contenteditable="true" spellcheck="false">LinkedIn</span>
+              <div class="link-url-wrapper">
+                <a href="https://linkedin.com/in/shekhovtsov" target="_blank" rel="noopener noreferrer" class="link-url" contenteditable="true" spellcheck="false">linkedin.com/in/shekhovtsov</a>
+                <button class="btn-edit-url no-print" onclick="openUrlEditor(this)" title="Змінити URL-адресу">🔗</button>
+              </div>
+              <button class="item-delete-btn no-print" onclick="deleteItem(this)" title="Видалити клітинку">×</button>
+            </li>
+            <li class="link-item excel-cell">
+              <span class="link-title" contenteditable="true" spellcheck="false">CryptoHack</span>
+              <div class="link-url-wrapper">
+                <a href="https://cryptohack.org/user/shekhovtsov" target="_blank" rel="noopener noreferrer" class="link-url" contenteditable="true" spellcheck="false">cryptohack.org/user/shekhovtsov</a>
+                <button class="btn-edit-url no-print" onclick="openUrlEditor(this)" title="Змінити URL-адресу">🔗</button>
+              </div>
+              <button class="item-delete-btn no-print" onclick="deleteItem(this)" title="Видалити клітинку">×</button>
+            </li>
+          </ul>
+          <button class="btn-add-item no-print" onclick="addLinkItem()">+ Додати посилання</button>
+        </section>
+      </aside>
+
+      <!-- ІНТЕРАКТИВНИЙ РОЗДІЛЮВАЧ КОЛОНОК (DRAG SPLITTER) -->
+      <div class="column-splitter no-print" id="drag-splitter" title="Потягніть вліво або вправо, щоб змінити ширину колонок як в Excel"></div>
+
+      <!-- ПРАВА КОЛОНКА (ОСНОВНА ЧАСТИНА) -->
+      <main class="main-content" id="main-col">
+        <!-- Заголовок / ПІБ -->
+        <header class="header-section excel-cell" id="cell-header">
+          <h1 class="candidate-name" contenteditable="true" spellcheck="false">Шеховцов<br>Максим Артемович</h1>
+          <div class="candidate-status" contenteditable="true" spellcheck="false">Курсант 2 курсу (спеціальність ІТ та Кібербезпека)</div>
+        </header>
+
+        <!-- Цілі -->
+        <section id="section-goals" class="excel-cell">
+          <h2 class="section-title" contenteditable="true" spellcheck="false">Цілі та професійний профіль</h2>
+          <div class="goals-text" contenteditable="true" spellcheck="false">
+Опанувати передові інструменти кіберрозвідки та цифрової криміналістики. Здобути глибокі практичні навички в аналізі даних та програмуванні для ефективної протидії кіберзагрозам та захисту інформаційної інфраструктури.
+          </div>
+        </section>
+
+        <!-- Освіта -->
+        <section id="section-education" class="excel-cell">
+          <h2 class="section-title" contenteditable="true" spellcheck="false">Освіта</h2>
+          <div id="education-group">
+            <div class="education-item excel-cell">
+              <div class="edu-title" contenteditable="true" spellcheck="false">Харківський національний університет внутрішніх справ (ХНУВС)</div>
+              <div class="edu-sub" contenteditable="true" spellcheck="false">2 курс, спеціальність "Кібербезпека"</div>
+              <div class="edu-period" contenteditable="true" spellcheck="false">2024 р. — теперішній час</div>
+              <div class="edu-note" contenteditable="true" spellcheck="false">Підготовка фахівців для сектору безпеки та оборони України, профільні дисципліни з кіберзахисту, криптографії та мережевої безпеки.</div>
+              <button class="item-delete-btn no-print" onclick="deleteItem(this)" title="Видалити клітинку">×</button>
+            </div>
+          </div>
+          <button class="btn-add-item no-print" onclick="addEducationItem()">+ Додати навчальний заклад</button>
+        </section>
+
+        <!-- Досягнення -->
+        <section id="section-achievements" class="excel-cell">
+          <h2 class="section-title" contenteditable="true" spellcheck="false">Досягнення та практичний досвід</h2>
+          <ul class="achievements-list" id="achievements-list">
+            <li class="achievement-item excel-cell">
+              <span contenteditable="true" spellcheck="false"><strong>Науково-дослідна діяльність:</strong> Розробка власного наукового дослідження в рамках проєкту "UNIVERSAL" (напрямок OSINT та цифрові сліди).</span>
+              <button class="item-delete-btn no-print" onclick="deleteItem(this)" title="Видалити клітинку">×</button>
+            </li>
+            <li class="achievement-item excel-cell">
+              <span contenteditable="true" spellcheck="false"><strong>Практична підготовка:</strong> Успішне проходження ознайомчої практики (серпень 2026 р.).</span>
+              <button class="item-delete-btn no-print" onclick="deleteItem(this)" title="Видалити клітинку">×</button>
+            </li>
+            <li class="achievement-item excel-cell">
+              <span contenteditable="true" spellcheck="false"><strong>Прикладна криптографія та автоматизація:</strong> Вирішення прикладних криптографічних задач та розробка скриптів для автоматизації процесів.</span>
+              <button class="item-delete-btn no-print" onclick="deleteItem(this)" title="Видалити клітинку">×</button>
+            </li>
+          </ul>
+          <button class="btn-add-item no-print" onclick="addAchievementItem()">+ Додати досягнення</button>
+        </section>
+
+        <!-- Офіційний колонтитул -->
+        <footer class="document-footer excel-cell" id="cell-footer">
+          <span contenteditable="true" spellcheck="false">Спеціалізоване резюме • Стандарт силових відомств</span>
+          <span contenteditable="true" spellcheck="false">Формат A4 • 1 сторінка</span>
+        </footer>
+      </main>
+
+    </div>
+  </div>
+
+  <!-- Модальне вікно редагування URL гіперпосилань -->
+  <div class="url-modal-backdrop" id="url-modal" onclick="closeUrlModalOnBackdrop(event)">
+    <div class="url-modal">
+      <h3>Редагування гіперпосилання</h3>
+      <label for="modal-link-label">Текст для відображення</label>
+      <input type="text" id="modal-link-label" placeholder="Наприклад: github.com/username">
+      
+      <label for="modal-link-href">Цільова адреса (URL / mailto / tel)</label>
+      <input type="text" id="modal-link-href" placeholder="https://...">
+      
+      <div class="url-modal-actions">
+        <button class="btn btn-secondary" onclick="closeUrlModal()">Скасувати</button>
+        <button class="btn btn-primary" onclick="saveUrlModal()">Зберегти посилання</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Модальне вікно центрування та вибору ракурсу фото (стиль Telegram) -->
+  <div class="url-modal-backdrop" id="photo-modal" onclick="closePhotoModalOnBackdrop(event)">
+    <div class="url-modal photo-adjust-modal">
+      <div class="photo-modal-header">
+        <h3>🎯 Центрування та кадрування фото <span id="photo-natural-res-badge" class="photo-res-badge" style="display:none;"></span> <span id="photo-face-status-badge" class="photo-res-badge photo-face-status-success" style="display:none;"></span></h3>
+        <button type="button" class="photo-modal-close" onclick="closePhotoModal()" title="Закрити без збереження">×</button>
+      </div>
+
+      <div class="photo-modal-body">
+        <!-- Полотно вибору області та центрування у стилі Telegram -->
+        <div class="photo-tg-stage-container">
+          <div class="photo-tg-stage" id="photo-tg-stage" title="Перетягуйте фото мишкою або крутіть коліщатко для зуму">
+            <!-- Повне вихідне фото -->
+            <img id="photo-modal-img" class="photo-tg-full-img" alt="Оригінальне фото" draggable="false" />
+            <!-- Рамка виявленого обличчя (Face Guide Box) -->
+            <div id="photo-face-guide-box" class="photo-face-guide-box" style="display: none;">
+              <span class="photo-face-guide-tag">Обличчя</span>
+            </div>
+            <!-- Затемнення та контур вибору Telegram (Circular Target Ring) -->
+            <div class="photo-tg-mask-overlay">
+              <div class="photo-tg-target-ring" id="photo-tg-target-ring">
+                <div class="photo-tg-grid">
+                  <div></div><div></div><div></div>
+                  <div></div><div></div><div></div>
+                  <div></div><div></div><div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="photo-modal-hint">
+            <strong>Переміщуйте фото</strong> мишкою у віконці, щоб відцентрувати потрібну частину обличчя без його обрізання. Коліщатком або повзунком можна наблизити чи <strong>віддалити</strong> ракурс.
+          </div>
+        </div>
+
+        <!-- Панель керування: Зум, Зсув, Пресети, Форма -->
+        <div class="photo-modal-controls">
+          
+          <!-- Зум (Масштаб) -->
+          <div class="photo-control-group">
+            <div class="photo-control-header">
+              <label for="photo-zoom-slider">Масштаб (Зум):</label>
+              <span id="photo-zoom-display" class="photo-badge">100%</span>
+            </div>
+            <div class="photo-zoom-row">
+              <button type="button" class="btn-ctrl-step" onclick="stepPhotoZoom(-5)" title="Віддалити (зменшити)">−</button>
+              <input type="range" id="photo-zoom-slider" min="40" max="300" step="2" value="100" oninput="onPhotoZoomChange(this.value)">
+              <button type="button" class="btn-ctrl-step" onclick="stepPhotoZoom(5)" title="Наблизити (збільшити)">+</button>
+            </div>
+          </div>
+
+          <!-- Джойстик тонкого центрування -->
+          <div class="photo-control-group">
+            <div class="photo-control-header">
+              <label>Тонке центрування:</label>
+              <span id="photo-coords-display" class="photo-badge">X: 0px, Y: 0px</span>
+            </div>
+            <div class="photo-dpad-wrap">
+              <div class="photo-dpad">
+                <button type="button" class="dpad-btn dpad-up" onclick="nudgePhoto(0, -6)" title="Вгору">▲</button>
+                <div class="dpad-mid-row">
+                  <button type="button" class="dpad-btn dpad-left" onclick="nudgePhoto(-6, 0)" title="Вліво">◀</button>
+                  <button type="button" class="dpad-btn dpad-center" onclick="resetPhotoOffset()" title="Точно по центру">🎯</button>
+                  <button type="button" class="dpad-btn dpad-right" onclick="nudgePhoto(6, 0)" title="Вправо">▶</button>
+                </div>
+                <button type="button" class="dpad-btn dpad-down" onclick="nudgePhoto(0, 6)" title="Вниз">▼</button>
+              </div>
+
+              <!-- Швидкі пресети -->
+              <div class="photo-presets">
+                <button type="button" class="btn-preset btn-preset-ai" id="btn-preset-face-ai" onclick="autoFitAndCenterFace({ showToast: true })" title="Автоматично виявити обличчя на фото за допомогою алгоритмів комп'ютерного зору та ідеально відцентрувати ракурс">✨ Автоцентрування по обличчю</button>
+                <button type="button" class="btn-preset" onclick="applyPhotoPreset('face')" title="Оптимально центрувати портрет, щоб обличчя було повністю видно">👤 Обличчя вгорі (портрет)</button>
+                <button type="button" class="btn-preset" onclick="applyPhotoPreset('center')" title="Скинути зсув рівно по центру кадру">🎯 Точно по центру</button>
+                <button type="button" class="btn-preset" onclick="applyPhotoPreset('wide')" title="Віддалити фото (75%), щоб вмістити більше простору">🔍 Віддалити огляд (75%)</button>
+                <button type="button" class="btn-preset" id="btn-preset-2362" onclick="applyPhotoPreset('2362x3543')" title="Спеціальне центрування під фото 2362×3543 (пропорція 2:3, фокус на верхній третині портрета)">📐 Під 2362×3543 (портрет 2:3)</button>
+                <button type="button" class="btn-preset" onclick="applyPhotoPreset('reset')" title="Скинути масштаб та зсув до 100%">🔄 Скинути все (100%)</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Форма, розмір та якість експорту аватара -->
+          <div class="photo-control-group">
+            <div class="photo-options-grid-3">
+              <div>
+                <label class="sub-label">Форма рамки:</label>
+                <div class="toggle-group toggle-group-sm">
+                  <button type="button" class="toggle-btn active" id="btn-shape-circle" onclick="setPhotoShape('circle')">⭕ Коло</button>
+                  <button type="button" class="toggle-btn" id="btn-shape-rounded" onclick="setPhotoShape('rounded')">🔲 Закруглена</button>
+                </div>
+              </div>
+              <div>
+                <label class="sub-label">Розмір на аркуші:</label>
+                <div class="toggle-group toggle-group-sm">
+                  <button type="button" class="toggle-btn" id="btn-size-sm" onclick="setPhotoSize(76)">76px</button>
+                  <button type="button" class="toggle-btn active" id="btn-size-md" onclick="setPhotoSize(90)">90px</button>
+                  <button type="button" class="toggle-btn" id="btn-size-lg" onclick="setPhotoSize(104)">104px</button>
+                </div>
+              </div>
+              <div>
+                <label class="sub-label">Роздільна здатність (Якість):</label>
+                <div class="toggle-group toggle-group-sm">
+                  <button type="button" class="toggle-btn" id="btn-res-800" onclick="setPhotoExportRes(800)" title="Стандартна чіткість 800×800px">800px</button>
+                  <button type="button" class="toggle-btn active" id="btn-res-1200" onclick="setPhotoExportRes(1200)" title="Висока роздільна здатність 1200×1200px (HD)">1200px HD</button>
+                  <button type="button" class="toggle-btn" id="btn-res-2362" onclick="setPhotoExportRes(2362)" title="Ультра-якість 2362px (Ultra HD) без втрати деталей оригіналу">2362px UHD</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="photo-modal-actions">
+        <button type="button" class="btn btn-secondary" onclick="closePhotoModal()">Скасувати</button>
+        <button type="button" class="btn btn-primary" onclick="saveAndClosePhotoModal()">✓ Вставити в резюме</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ==========================================================================
+    // ЛОГІКА РОЗТЯГУВАННЯ КЛІТИНОК (EXCEL-STYLE DRAG RESIZING) ТА ЗБЕРЕЖЕННЯ
+    // ==========================================================================
+    const STORAGE_KEY = 'shekhovtsov_resume_excel_html';
+    const PHOTO_STORAGE_KEY = 'shekhovtsov_resume_excel_photo';
+    const SETTINGS_STORAGE_KEY = 'shekhovtsov_resume_excel_settings';
+
+    let currentEditingAnchor = null;
+    let saveTimeout = null;
+
+    let appSettings = {
+      density: 'standard',
+      sidebarWidth: 33,
+      fontScale: 100,
+      showGrid: false,
+      photoZoom: 100,
+      photoX: 0,
+      photoY: 0,
+      photoShape: 'circle',
+      photoSize: 90,
+      photoExportRes: 1200,
+      photoNaturalWidth: 0,
+      photoNaturalHeight: 0
+    };
+
+    window.addEventListener('DOMContentLoaded', () => {
+      loadSavedSettings();
+      loadSavedData();
+      attachExcelResizers();
+      attachAutoSaveListeners();
+      initColumnSplitter();
+      initPhotoInteractions();
+      initPhotoDragAndDrop();
+    });
+
+    // ==========================================================================
+    // СИСТЕМА РОЗТЯГУВАННЯ КЛІТИНОК ЯК В EXCEL
+    // ==========================================================================
+    function attachExcelResizers() {
+      const cells = document.querySelectorAll('.excel-cell');
+      const tooltip = document.getElementById('resize-tooltip');
+
+      cells.forEach(cell => {
+        // Уникаємо повторного додавання маніпуляторів
+        if (cell.querySelector('.cell-resizer-bottom')) return;
+
+        // Нижня межа (Row Resizer Bar - як межа рядка в Excel)
+        const bottomResizer = document.createElement('div');
+        bottomResizer.className = 'cell-resizer-bottom no-print';
+        bottomResizer.title = 'Потягніть для зміни висоти клітинки (Подвійний клік: Авто-підгін)';
+        bottomResizer.innerHTML = `
+          <div class="cell-resizer-line">
+            <div class="cell-resizer-handle">↕</div>
+          </div>
+        `;
+
+        // Кутовий маніпулятор (Corner Resizer Handle)
+        const cornerResizer = document.createElement('div');
+        cornerResizer.className = 'cell-resizer-corner no-print';
+        cornerResizer.title = 'Потягніть кут для вільного розтягування клітинки';
+        cornerResizer.innerHTML = `
+          <svg viewBox="0 0 10 10">
+            <path d="M10 0 L10 10 L0 10 Z"></path>
+          </svg>
+        `;
+
+        cell.appendChild(bottomResizer);
+        cell.appendChild(cornerResizer);
+
+        // 1. Двойной клик на нижней границе: Автоподгон высоты под текст (Auto-fit)
+        bottomResizer.addEventListener('dblclick', (e) => {
+          e.stopPropagation();
+          cell.style.minHeight = '';
+          cell.style.height = '';
+          scheduleSave();
+          if (tooltip) {
+            tooltip.innerText = 'Авто-підгін виконано!';
+            tooltip.style.display = 'block';
+            tooltip.style.left = e.clientX + 10 + 'px';
+            tooltip.style.top = e.clientY - 25 + 'px';
+            setTimeout(() => { tooltip.style.display = 'none'; }, 1000);
+          }
+        });
+
+        // 2. Перетягивание нижней границы по вертикали (Высота строки в Excel)
+        bottomResizer.addEventListener('mousedown', (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+
+          bottomResizer.classList.add('dragging');
+          document.body.style.cursor = 'row-resize';
+          document.body.style.userSelect = 'none';
+
+          const startY = e.clientY;
+          const startHeight = cell.getBoundingClientRect().height;
+
+          function onMouseMove(moveEvent) {
+            const deltaY = moveEvent.clientY - startY;
+            const newHeight = Math.max(24, Math.round(startHeight + deltaY));
+            cell.style.minHeight = newHeight + 'px';
+
+            if (tooltip) {
+              tooltip.innerText = 'Висота клітинки: ' + newHeight + 'px (2-клік: авто-підгін)';
+              tooltip.style.display = 'block';
+              tooltip.style.left = (moveEvent.clientX + 15) + 'px';
+              tooltip.style.top = (moveEvent.clientY - 30) + 'px';
+            }
+          }
+
+          function onMouseUp() {
+            bottomResizer.classList.remove('dragging');
+            document.body.style.cursor = '';
+            document.body.style.userSelect = '';
+            if (tooltip) tooltip.style.display = 'none';
+            window.removeEventListener('mousemove', onMouseMove);
+            window.removeEventListener('mouseup', onMouseUp);
+            scheduleSave();
+          }
+
+          window.addEventListener('mousemove', onMouseMove);
+          window.addEventListener('mouseup', onMouseUp);
+        });
+
+        // 3. Угловой манипулятор (Свободное растягивание по высоте и ширине)
+        cornerResizer.addEventListener('mousedown', (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+
+          document.body.style.cursor = 'se-resize';
+          document.body.style.userSelect = 'none';
+
+          const startY = e.clientY;
+          const startHeight = cell.getBoundingClientRect().height;
+
+          function onCornerMove(moveEvent) {
+            const deltaY = moveEvent.clientY - startY;
+            const newHeight = Math.max(24, Math.round(startHeight + deltaY));
+            cell.style.minHeight = newHeight + 'px';
+
+            if (tooltip) {
+              tooltip.innerText = 'Розмір клітинки: ' + newHeight + 'px';
+              tooltip.style.display = 'block';
+              tooltip.style.left = (moveEvent.clientX + 15) + 'px';
+              tooltip.style.top = (moveEvent.clientY - 30) + 'px';
+            }
+          }
+
+          function onCornerUp() {
+            document.body.style.cursor = '';
+            document.body.style.userSelect = '';
+            if (tooltip) tooltip.style.display = 'none';
+            window.removeEventListener('mousemove', onCornerMove);
+            window.removeEventListener('mouseup', onCornerUp);
+            scheduleSave();
+          }
+
+          window.addEventListener('mousemove', onCornerMove);
+          window.addEventListener('mouseup', onCornerUp);
+        });
+      });
+    }
+
+    // Перемикання відображення сітки таблиці Excel
+    function toggleExcelGrid() {
+      appSettings.showGrid = !appSettings.showGrid;
+      document.body.classList.toggle('show-excel-grid', appSettings.showGrid);
+      const btn = document.getElementById('btn-toggle-grid');
+      const text = document.getElementById('excel-grid-text');
+      if (btn) btn.classList.toggle('active', appSettings.showGrid);
+      if (text) text.innerText = appSettings.showGrid ? 'Приховати сітку' : 'Сітка Excel';
+      saveSettings();
+    }
+
+    // Налаштування полів, масштабу шрифту та ширини
+    function setDensity(density) {
+      document.body.setAttribute('data-density', density);
+      appSettings.density = density;
+
+      ['standard', 'compact', 'minimal'].forEach(d => {
+        const btn = document.getElementById('btn-density-' + d);
+        if (btn) btn.classList.toggle('active', d === density);
+      });
+
+      saveSettings();
+    }
+
+    function updateSidebarWidth(val) {
+      document.documentElement.style.setProperty('--sidebar-width', val + '%');
+      const valLabel = document.getElementById('sidebar-width-value');
+      if (valLabel) valLabel.innerText = val + '%';
+      appSettings.sidebarWidth = val;
+      saveSettings();
+    }
+
+    function updateFontScale(val) {
+      document.documentElement.style.setProperty('--font-scale', val + '%');
+      const valLabel = document.getElementById('font-scale-value');
+      if (valLabel) valLabel.innerText = val + '%';
+      appSettings.fontScale = val;
+      saveSettings();
+    }
+
+    function saveSettings() {
+      try {
+        localStorage.setItem(SETTINGS_STORAGE_KEY, JSON.stringify(appSettings));
+      } catch (e) {}
+    }
+
+    function loadSavedSettings() {
+      try {
+        const raw = localStorage.getItem(SETTINGS_STORAGE_KEY);
+        if (raw) {
+          appSettings = Object.assign(appSettings, JSON.parse(raw));
+          setDensity(appSettings.density || 'standard');
+          updateSidebarWidth(appSettings.sidebarWidth || 33);
+          updateFontScale(appSettings.fontScale || 100);
+
+          if (appSettings.showGrid) {
+            document.body.classList.add('show-excel-grid');
+            const btn = document.getElementById('btn-toggle-grid');
+            const text = document.getElementById('excel-grid-text');
+            if (btn) btn.classList.add('active');
+            if (text) text.innerText = 'Приховати сітку';
+          }
+
+          const widthSlider = document.getElementById('sidebar-width-slider');
+          if (widthSlider) widthSlider.value = appSettings.sidebarWidth || 33;
+
+          const fontSlider = document.getElementById('font-scale-slider');
+          if (fontSlider) fontSlider.value = appSettings.fontScale || 100;
+        }
+        applyPhotoStyles();
+      } catch (e) {}
+    }
+
+    // Drag-to-resize розділювач між лівою та правою колонками (як межа стовпців в Excel)
+    function initColumnSplitter() {
+      const splitter = document.getElementById('drag-splitter');
+      const container = document.getElementById('resume-container');
+      if (!splitter || !container) return;
+
+      let isDragging = false;
+
+      splitter.addEventListener('mousedown', (e) => {
+        isDragging = true;
+        splitter.classList.add('dragging');
+        document.body.style.cursor = 'col-resize';
+        document.body.style.userSelect = 'none';
+        e.preventDefault();
+      });
+
+      window.addEventListener('mousemove', (e) => {
+        if (!isDragging) return;
+        const rect = container.getBoundingClientRect();
+        const offsetX = e.clientX - rect.left;
+        let percentage = (offsetX / rect.width) * 100;
+
+        // Межі розтягування (від 22% до 46%)
+        percentage = Math.max(22, Math.min(46, percentage));
+        percentage = Math.round(percentage);
+
+        updateSidebarWidth(percentage);
+        const slider = document.getElementById('sidebar-width-slider');
+        if (slider) slider.value = percentage;
+      });
+
+      window.addEventListener('mouseup', () => {
+        if (isDragging) {
+          isDragging = false;
+          splitter.classList.remove('dragging');
+          document.body.style.cursor = '';
+          document.body.style.userSelect = '';
+        }
+      });
+    }
+
+    // Автозбереження
+    function attachAutoSaveListeners() {
+      const container = document.getElementById('resume-container');
+      if (!container) return;
+      container.addEventListener('input', () => {
+        scheduleSave();
+      });
+      container.addEventListener('blur', (e) => {
+        if (e.target && e.target.tagName === 'A') {
+          syncAnchorHref(e.target);
+        }
+        scheduleSave();
+      }, true);
+    }
+
+    function syncAnchorHref(anchor) {
+      const text = anchor.innerText.trim();
+      if (!text) return;
+      if (text.startsWith('@')) {
+        anchor.href = 'https://t.me/' + text.substring(1);
+      } else if (text.includes('@') && !text.startsWith('http')) {
+        anchor.href = 'mailto:' + text;
+      } else if (text.startsWith('+') || /^[0-9\(\)\s\-\+]+$/.test(text)) {
+        anchor.href = 'tel:' + text.replace(/[^0-9\+]/g, '');
+      } else if (!text.startsWith('http') && !text.startsWith('mailto:') && !text.startsWith('tel:')) {
+        anchor.href = 'https://' + text;
+      }
+    }
+
+    function scheduleSave() {
+      clearTimeout(saveTimeout);
+      saveTimeout = setTimeout(() => {
+        saveResumeData();
+      }, 500);
+    }
+
+    function saveResumeData() {
+      const resumeContainer = document.getElementById('resume-container');
+      if (!resumeContainer) return;
+      try {
+        localStorage.setItem(STORAGE_KEY, resumeContainer.innerHTML);
+        showSavedIndicator();
+      } catch (e) {
+        console.warn('Не вдалося зберегти в LocalStorage:', e);
+      }
+    }
+
+    function showSavedIndicator() {
+      const indicator = document.getElementById('save-indicator');
+      if (!indicator) return;
+      indicator.classList.add('show');
+      setTimeout(() => {
+        indicator.classList.remove('show');
+      }, 2000);
+    }
+
+    function loadSavedData() {
+      try {
+        const savedHtml = localStorage.getItem(STORAGE_KEY);
+        if (savedHtml) {
+          const container = document.getElementById('resume-container');
+          container.innerHTML = savedHtml;
+          attachExcelResizers();
+        }
+
+        const savedPhoto = localStorage.getItem(PHOTO_STORAGE_KEY);
+        if (savedPhoto) {
+          applyPhotoSrc(savedPhoto);
+        }
+      } catch (e) {
+        console.warn('Помилка завантаження даних:', e);
+      }
+    }
+
+    // ==========================================================================
+    // ФОТО: ЗАВАНТАЖЕННЯ, ШТУЧНИЙ ІНТЕЛЕКТ ДЕТЕКЦІЇ ТА АВТОЦЕНТРУВАННЯ ПО ОБЛИЧЧЮ
+    // ==========================================================================
+
+    function triggerPhotoUpload() {
+      const fileInput = document.getElementById('photo-file-input');
+      if (fileInput) fileInput.click();
+    }
+
+    function processPhotoFile(file) {
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const dataUrl = e.target.result;
+        applyPhotoSrc(dataUrl);
+        try {
+          localStorage.setItem(PHOTO_STORAGE_KEY, dataUrl);
+        } catch (err) {
+          console.warn('Фото збережено в поточній сесії');
+        }
+        scheduleSave();
+
+        // Автоматично аналізуємо зображення, виявляємо обличчя та центруємо
+        autoFitAndCenterFace({ autoOpenModal: true, showToast: true });
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function handlePhotoUpload(event) {
+      const file = event.target.files && event.target.files[0];
+      if (file) {
+        processPhotoFile(file);
+      }
+    }
+
+    function onPhotoBoxClick(event) {
+      const img = document.getElementById('user-photo-img');
+      const hasPhoto = img && img.src && img.style.display !== 'none';
+      if (!hasPhoto) {
+        triggerPhotoUpload();
+      }
+    }
+
+    function applyPhotoSrc(src) {
+      const img = document.getElementById('user-photo-img');
+      const placeholder = document.getElementById('photo-placeholder-content');
+      const removeBtn = document.getElementById('btn-remove-photo');
+      const adjustBtn = document.getElementById('btn-adjust-photo');
+      const autoFaceBtn = document.getElementById('btn-auto-face');
+      const photoBox = document.getElementById('photo-box');
+
+      if (img && placeholder) {
+        img.src = src;
+        img.style.display = 'block';
+        placeholder.style.display = 'none';
+      }
+      if (photoBox) {
+        photoBox.classList.add('has-photo');
+      }
+      if (adjustBtn) {
+        adjustBtn.style.display = 'inline-flex';
+      }
+      if (autoFaceBtn) {
+        autoFaceBtn.style.display = 'inline-flex';
+      }
+      if (removeBtn) {
+        removeBtn.style.display = 'inline-flex';
+      }
+      applyPhotoStyles();
+    }
+
+    function removePhoto() {
+      const img = document.getElementById('user-photo-img');
+      const placeholder = document.getElementById('photo-placeholder-content');
+      const removeBtn = document.getElementById('btn-remove-photo');
+      const adjustBtn = document.getElementById('btn-adjust-photo');
+      const autoFaceBtn = document.getElementById('btn-auto-face');
+      const photoBox = document.getElementById('photo-box');
+      const fileInput = document.getElementById('photo-file-input');
+      const faceGuide = document.getElementById('photo-face-guide-box');
+      const faceBadge = document.getElementById('photo-face-status-badge');
+
+      if (img && placeholder) {
+        img.src = '';
+        img.style.display = 'none';
+        placeholder.style.display = 'flex';
+      }
+      if (photoBox) {
+        photoBox.classList.remove('has-photo');
+      }
+      if (adjustBtn) adjustBtn.style.display = 'none';
+      if (autoFaceBtn) autoFaceBtn.style.display = 'none';
+      if (removeBtn) removeBtn.style.display = 'none';
+      if (faceGuide) faceGuide.style.display = 'none';
+      if (faceBadge) faceBadge.style.display = 'none';
+      if (fileInput) fileInput.value = '';
+
+      appSettings.detectedFace = null;
+      try {
+        localStorage.removeItem(PHOTO_STORAGE_KEY);
+      } catch (e) {}
+      scheduleSave();
+    }
+
+    // --- МОДУЛЬ КОМП'ЮТЕРНОГО ЗОРУ ТА РОЗПІЗНАВАННЯ ОБЛИЧЧЯ ---
+    async function detectFaceCoordinates(imageSource) {
+      // 1. Апаратне виявлення через сучасний браузерний FaceDetector API (якщо підтримується)
+      if (typeof window !== 'undefined' && 'FaceDetector' in window) {
+        try {
+          const detector = new window.FaceDetector({ fastMode: true, maxDetectedFaces: 3 });
+          const faces = await detector.detect(imageSource);
+          if (faces && faces.length > 0) {
+            faces.sort((a, b) => (b.boundingBox.width * b.boundingBox.height) - (a.boundingBox.width * a.boundingBox.height));
+            const bb = faces[0].boundingBox;
+            return {
+              x: bb.x,
+              y: bb.y,
+              width: bb.width,
+              height: bb.height,
+              confidence: 0.95,
+              method: 'native-face-detector'
+            };
+          }
+        } catch (e) {
+          console.warn('Native FaceDetector error, falling back:', e);
+        }
+      }
+
+      // 2. Алгоритм Viola-Jones (Haar Cascades) на основі бібліотеки tracking.js
+      if (typeof tracking !== 'undefined' && tracking.ViolaJones && tracking.ViolaJones.classifiers && tracking.ViolaJones.classifiers.face) {
+        try {
+          const nw = imageSource.naturalWidth || imageSource.width;
+          const nh = imageSource.naturalHeight || imageSource.height;
+          const maxDim = 400;
+          const scale = Math.min(1, maxDim / Math.max(nw, nh));
+          const workW = Math.max(80, Math.round(nw * scale));
+          const workH = Math.max(80, Math.round(nh * scale));
+
+          const workCanvas = document.createElement('canvas');
+          workCanvas.width = workW;
+          workCanvas.height = workH;
+          const workCtx = workCanvas.getContext('2d');
+          workCtx.drawImage(imageSource, 0, 0, workW, workH);
+
+          const imgData = workCtx.getImageData(0, 0, workW, workH);
+          const rects = tracking.ViolaJones.detect(imgData.data, workW, workH, 1.25, 1.2, 1.4, 0.15, tracking.ViolaJones.classifiers.face);
+          if (rects && rects.length > 0) {
+            rects.sort((a, b) => (b.width * b.height) - (a.width * a.height));
+            const best = rects[0];
+            return {
+              x: best.x / scale,
+              y: best.y / scale,
+              width: best.width / scale,
+              height: best.height / scale,
+              confidence: 0.9,
+              method: 'tracking-viola-jones'
+            };
+          }
+        } catch (e) {
+          console.warn('tracking.js detection error, falling back:', e);
+        }
+      }
+
+      // 3. Інтелектуальний аналіз пікселів шкіри (YCbCr Skin-Tone Cluster & Top-Centroid)
+      try {
+        const nw = imageSource.naturalWidth || imageSource.width;
+        const nh = imageSource.naturalHeight || imageSource.height;
+        const workW = 200;
+        const workH = Math.max(100, Math.round((nh / nw) * 200));
+        const workCanvas = document.createElement('canvas');
+        workCanvas.width = workW;
+        workCanvas.height = workH;
+        const workCtx = workCanvas.getContext('2d');
+        workCtx.drawImage(imageSource, 0, 0, workW, workH);
+        const data = workCtx.getImageData(0, 0, workW, workH).data;
+
+        let skinCount = 0;
+        let sumX = 0;
+        let sumY = 0;
+        let minX = workW, maxX = 0, minY = workH, maxY = 0;
+        const limitY = Math.round(workH * 0.72); // Фокусуємося на верхніх 70% фотографії
+
+        for (let y = 0; y < limitY; y++) {
+          for (let x = 0; x < workW; x++) {
+            const idx = (y * workW + x) * 4;
+            const r = data[idx];
+            const g = data[idx + 1];
+            const b = data[idx + 2];
+
+            const cb = -0.168736 * r - 0.331264 * g + 0.5 * b + 128;
+            const cr = 0.5 * r - 0.418688 * g - 0.081312 * b + 128;
+
+            if (cb >= 77 && cb <= 130 && cr >= 133 && cr <= 175 && r > g && g > b && (r - g) >= 12) {
+              skinCount++;
+              sumX += x;
+              sumY += y;
+              if (x < minX) minX = x;
+              if (x > maxX) maxX = x;
+              if (y < minY) minY = y;
+              if (y > maxY) maxY = y;
+            }
+          }
+        }
+
+        if (skinCount > 60) {
+          const avgX = (sumX / skinCount) * (nw / workW);
+          const avgY = (sumY / skinCount) * (nh / workH);
+          const clusterW = Math.max(nw * 0.28, (maxX - minX) * (nw / workW));
+          const clusterH = Math.max(nh * 0.28, (maxY - minY) * (nh / workH));
+          return {
+            x: Math.max(0, avgX - clusterW / 2),
+            y: Math.max(0, avgY - clusterH / 2),
+            width: Math.min(nw, clusterW),
+            height: Math.min(nh, clusterH),
+            confidence: 0.75,
+            method: 'skin-centroid'
+          };
+        }
+      } catch (e) {
+        console.warn('Skin detection fallback error:', e);
+      }
+
+      // 4. Оптимальне портретне кадрування за золотим правилом третин
+      const nw = imageSource.naturalWidth || imageSource.width || 800;
+      const nh = imageSource.naturalHeight || imageSource.height || 1000;
+      const size = Math.min(nw, nh) * 0.45;
+      return {
+        x: (nw - size) / 2,
+        y: Math.max(0, nh * 0.22),
+        width: size,
+        height: size,
+        confidence: 0.5,
+        method: 'portrait-rule-of-thirds'
+      };
+    }
+
+    // --- АВТОМАТИЧНЕ КАДРУВАННЯ ТА ЦЕНТРУВАННЯ ПО ОБЛИЧЧЮ ---
+    async function autoFitAndCenterFace(options = {}) {
+      const img = document.getElementById('user-photo-img');
+      if (!img || !img.src || img.style.display === 'none') {
+        showAutoFaceToast('Спочатку завантажте фото кандидата');
+        return false;
+      }
+
+      const statusBadge = document.getElementById('photo-face-status-badge');
+      const btnFace = document.getElementById('btn-preset-face-ai');
+      if (statusBadge) {
+        statusBadge.innerHTML = '🔍 Аналіз обличчя...';
+        statusBadge.style.display = 'inline-flex';
+        statusBadge.className = 'photo-res-badge photo-face-status-searching';
+      }
+      if (btnFace) btnFace.classList.add('loading');
+
+      const tempImg = new Image();
+      tempImg.crossOrigin = 'anonymous';
+
+      return new Promise((resolve) => {
+        tempImg.onload = async function() {
+          const nw = tempImg.naturalWidth || tempImg.width;
+          const nh = tempImg.naturalHeight || tempImg.height;
+          appSettings.photoNaturalWidth = nw;
+          appSettings.photoNaturalHeight = nh;
+
+          const face = await detectFaceCoordinates(tempImg);
+
+          if (face) {
+            const faceCenterX = face.x + face.width / 2;
+            const focalY = face.y + face.height * 0.42; // Оптичний центр на рівні очей та перенісся
+
+            const displaySize = appSettings.photoSize || 90;
+            const baseScale = Math.max(displaySize / nw, displaySize / nh);
+
+            // Оптимальний розмір обличчя в круглому аватарі — 48-52% від діаметра
+            const targetFaceRatio = 0.50;
+            const faceScreenH = face.height * baseScale;
+            const idealZoomFactor = (displaySize * targetFaceRatio) / Math.max(10, faceScreenH);
+
+            const idealZoom = Math.min(220, Math.max(65, Math.round(idealZoomFactor * 100)));
+            appSettings.photoZoom = idealZoom;
+
+            const effectiveScale = baseScale * (idealZoom / 100);
+            const deltaX = faceCenterX - (nw / 2);
+            const deltaY = focalY - (nh / 2);
+
+            // Центруємо по горизонталі, по вертикалі з легким зміщенням вгору (-5%) для природного портрета
+            const targetInAvatarX = 0;
+            const targetInAvatarY = -Math.round(displaySize * 0.05);
+
+            appSettings.photoX = Math.round(targetInAvatarX - deltaX * effectiveScale);
+            appSettings.photoY = Math.round(targetInAvatarY - deltaY * effectiveScale);
+
+            appSettings.detectedFace = {
+              x: face.x,
+              y: face.y,
+              width: face.width,
+              height: face.height,
+              method: face.method
+            };
+
+            // Якщо фото високої чіткості (2362x3543 або >2000px), вмикаємо максимальну роздільну здатність для PPTX
+            if (nw >= 2000 || nh >= 3000) {
+              appSettings.photoExportRes = 2362;
+            }
+
+            applyPhotoStyles();
+            saveSettings();
+            scheduleSave();
+
+            if (statusBadge) {
+              const label = face.method === 'native-face-detector' ? 'ШІ / FaceDetector' : (face.method === 'tracking-viola-jones' ? 'Viola-Jones' : 'Аналіз обличчя');
+              statusBadge.innerHTML = `✨ Обличчя відцентровано (${label})`;
+              statusBadge.className = 'photo-res-badge photo-face-status-success';
+              statusBadge.style.display = 'inline-flex';
+            }
+
+            if (options.showToast) {
+              showAutoFaceToast('✨ Обличчя виявлено та ідеально відцентровано!');
+            }
+          }
+
+          if (btnFace) btnFace.classList.remove('loading');
+          if (options.autoOpenModal) {
+            openPhotoAdjustModal();
+          }
+          resolve(true);
+        };
+
+        tempImg.onerror = function() {
+          if (statusBadge) statusBadge.style.display = 'none';
+          if (btnFace) btnFace.classList.remove('loading');
+          resolve(false);
+        };
+
+        tempImg.src = img.src;
+      });
+    }
+
+    function showAutoFaceToast(message) {
+      let toast = document.getElementById('auto-face-toast');
+      if (!toast) {
+        toast = document.createElement('div');
+        toast.id = 'auto-face-toast';
+        toast.className = 'auto-face-toast';
+        document.body.appendChild(toast);
+      }
+      toast.innerText = message;
+      toast.classList.add('show');
+      clearTimeout(toast._timer);
+      toast._timer = setTimeout(() => {
+        toast.classList.remove('show');
+      }, 3000);
+    }
+
+    // Застосування стилів позиціонування, центрування та масштабу до фото
+    function applyPhotoStyles() {
+      const zoom = appSettings.photoZoom || 100;
+      const posX = appSettings.photoX || 0;
+      const posY = appSettings.photoY || 0;
+      const shape = appSettings.photoShape || 'circle';
+      const size = appSettings.photoSize || 90;
+      const radius = shape === 'rounded' ? '14px' : '50%';
+
+      // Оновлення CSS змінних на рівні документа для аватара в резюме
+      document.documentElement.style.setProperty('--photo-zoom', zoom);
+      document.documentElement.style.setProperty('--photo-x', posX + 'px');
+      document.documentElement.style.setProperty('--photo-y', posY + 'px');
+      document.documentElement.style.setProperty('--photo-radius', radius);
+      document.documentElement.style.setProperty('--photo-size', size + 'px');
+
+      // Оновлення елементів у модальному вікні центрування
+      const zoomSlider = document.getElementById('photo-zoom-slider');
+      const zoomDisp = document.getElementById('photo-zoom-display');
+      const coordsDisp = document.getElementById('photo-coords-display');
+      const modalImg = document.getElementById('photo-modal-img');
+
+      if (zoomSlider) zoomSlider.value = zoom;
+      if (zoomDisp) zoomDisp.innerText = zoom + '%';
+      if (coordsDisp) coordsDisp.innerText = `X: ${Math.round(posX)}px, Y: ${Math.round(posY)}px`;
+
+      if (modalImg) {
+        const nw = appSettings.photoNaturalWidth || 200;
+        const nh = appSettings.photoNaturalHeight || 200;
+        const coverScale = Math.max(200 / nw, 200 / nh);
+        const baseW = nw * coverScale;
+        const baseH = nh * coverScale;
+
+        modalImg.style.width = baseW + 'px';
+        modalImg.style.height = baseH + 'px';
+        modalImg.style.left = '50%';
+        modalImg.style.top = '50%';
+        modalImg.style.marginLeft = (-baseW / 2) + 'px';
+        modalImg.style.marginTop = (-baseH / 2) + 'px';
+
+        const modalScaleRatio = 200 / (appSettings.photoSize || 90);
+        const modalX = posX * modalScaleRatio;
+        const modalY = posY * modalScaleRatio;
+        modalImg.style.transform = `translate(${modalX}px, ${modalY}px) scale(${zoom / 100})`;
+
+        // Оновлюємо рамку виявленого обличчя на сцені
+        const faceGuide = document.getElementById('photo-face-guide-box');
+        if (faceGuide && appSettings.detectedFace) {
+          const df = appSettings.detectedFace;
+          const currentZoom = zoom / 100;
+          const guideW = df.width * coverScale * currentZoom;
+          const guideH = df.height * coverScale * currentZoom;
+          const faceRelCenterX = (df.x + df.width / 2 - nw / 2) * coverScale;
+          const faceRelCenterY = (df.y + df.height / 2 - nh / 2) * coverScale;
+          const guideCenterX = faceRelCenterX * currentZoom + modalX;
+          const guideCenterY = faceRelCenterY * currentZoom + modalY;
+
+          faceGuide.style.display = 'block';
+          faceGuide.style.left = '50%';
+          faceGuide.style.top = '50%';
+          faceGuide.style.width = Math.round(guideW) + 'px';
+          faceGuide.style.height = Math.round(guideH) + 'px';
+          faceGuide.style.marginLeft = Math.round(guideCenterX - guideW / 2) + 'px';
+          faceGuide.style.marginTop = Math.round(guideCenterY - guideH / 2) + 'px';
+        } else if (faceGuide) {
+          faceGuide.style.display = 'none';
+        }
+      }
+
+      const targetRing = document.getElementById('photo-tg-target-ring');
+      if (targetRing) {
+        targetRing.style.borderRadius = shape === 'rounded' ? '28px' : '50%';
+      }
+
+      // Активні кнопки форми та розміру
+      const btnCircle = document.getElementById('btn-shape-circle');
+      const btnRounded = document.getElementById('btn-shape-rounded');
+      if (btnCircle && btnRounded) {
+        btnCircle.classList.toggle('active', shape === 'circle');
+        btnRounded.classList.toggle('active', shape === 'rounded');
+      }
+
+      ['sm', 'md', 'lg'].forEach(s => {
+        const b = document.getElementById(`btn-size-${s}`);
+        if (!b) return;
+        const targetVal = s === 'sm' ? 76 : (s === 'md' ? 90 : 104);
+        b.classList.toggle('active', size === targetVal);
+      });
+
+      // Активні кнопки роздільної здатності
+      const res = appSettings.photoExportRes || 1200;
+      [800, 1200, 2362].forEach(r => {
+        const b = document.getElementById(`btn-res-${r}`);
+        if (b) b.classList.toggle('active', res === r);
+      });
+    }
+
+    // Підтримка перетягування файлів мишкою прямо на аватар (Drag & Drop)
+    function initPhotoDragAndDrop() {
+      const box = document.getElementById('photo-box');
+      const wrapper = document.getElementById('cell-photo');
+      if (!box || !wrapper) return;
+
+      ['dragenter', 'dragover'].forEach(eventName => {
+        wrapper.addEventListener(eventName, (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          box.classList.add('drag-over');
+        });
+      });
+
+      ['dragleave', 'drop'].forEach(eventName => {
+        wrapper.addEventListener(eventName, (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          box.classList.remove('drag-over');
+        });
+      });
+
+      wrapper.addEventListener('drop', (e) => {
+        const dt = e.dataTransfer;
+        if (dt && dt.files && dt.files.length > 0) {
+          const file = dt.files[0];
+          if (file.type.startsWith('image/')) {
+            processPhotoFile(file);
+          }
+        }
+      });
+    }
+
+    // Ініціалізація інтерактивного перетягування (Drag-to-Center) для фото
+    function initPhotoInteractions() {
+      const photoBox = document.getElementById('photo-box');
+      const modalViewport = document.getElementById('photo-tg-stage') || document.getElementById('photo-modal-viewport');
+
+      // 1. Інтерактивне перетягування безпосередньо в анкеті
+      if (photoBox) {
+        let isDragging = false;
+        let startX = 0;
+        let startY = 0;
+        let origX = 0;
+        let origY = 0;
+        let hasMoved = false;
+
+        photoBox.addEventListener('mousedown', (e) => {
+          const img = document.getElementById('user-photo-img');
+          const hasPhoto = img && img.src && img.style.display !== 'none';
+          if (!hasPhoto) return;
+
+          e.preventDefault();
+          isDragging = true;
+          hasMoved = false;
+          startX = e.clientX;
+          startY = e.clientY;
+          origX = appSettings.photoX || 0;
+          origY = appSettings.photoY || 0;
+          photoBox.classList.add('dragging');
+          document.body.style.cursor = 'grabbing';
+          document.body.style.userSelect = 'none';
+
+          function onMouseMove(moveEvent) {
+            if (!isDragging) return;
+            const deltaX = moveEvent.clientX - startX;
+            const deltaY = moveEvent.clientY - startY;
+            if (Math.abs(deltaX) > 2 || Math.abs(deltaY) > 2) {
+              hasMoved = true;
+            }
+            appSettings.photoX = Math.round(origX + deltaX);
+            appSettings.photoY = Math.round(origY + deltaY);
+            applyPhotoStyles();
+          }
+
+          function onMouseUp() {
+            isDragging = false;
+            photoBox.classList.remove('dragging');
+            document.body.style.cursor = '';
+            document.body.style.userSelect = '';
+            window.removeEventListener('mousemove', onMouseMove);
+            window.removeEventListener('mouseup', onMouseUp);
+
+            if (hasMoved) {
+              saveSettings();
+              scheduleSave();
+            }
+          }
+
+          window.addEventListener('mousemove', onMouseMove);
+          window.addEventListener('mouseup', onMouseUp);
+        });
+
+        photoBox.addEventListener('wheel', (e) => {
+          const img = document.getElementById('user-photo-img');
+          const hasPhoto = img && img.src && img.style.display !== 'none';
+          if (!hasPhoto) return;
+
+          e.preventDefault();
+          const step = e.deltaY < 0 ? 5 : -5;
+          const currentZoom = appSettings.photoZoom || 100;
+          appSettings.photoZoom = Math.min(300, Math.max(40, currentZoom + step));
+          applyPhotoStyles();
+          saveSettings();
+          scheduleSave();
+        }, { passive: false });
+      }
+
+      // 2. Інтерактивне перетягування у модальному вікні центрування
+      if (modalViewport) {
+        let isModalDragging = false;
+        let mStartX = 0;
+        let mStartY = 0;
+        let mOrigX = 0;
+        let mOrigY = 0;
+
+        modalViewport.addEventListener('mousedown', (e) => {
+          e.preventDefault();
+          isModalDragging = true;
+          mStartX = e.clientX;
+          mStartY = e.clientY;
+          mOrigX = appSettings.photoX || 0;
+          mOrigY = appSettings.photoY || 0;
+          modalViewport.classList.add('dragging');
+          document.body.style.cursor = 'grabbing';
+          document.body.style.userSelect = 'none';
+
+          const modalScaleRatio = 200 / (appSettings.photoSize || 90);
+
+          function onModalMove(moveEvent) {
+            if (!isModalDragging) return;
+            const deltaX = moveEvent.clientX - mStartX;
+            const deltaY = moveEvent.clientY - mStartY;
+            appSettings.photoX = Math.round(mOrigX + (deltaX / modalScaleRatio));
+            appSettings.photoY = Math.round(mOrigY + (deltaY / modalScaleRatio));
+            applyPhotoStyles();
+          }
+
+          function onModalUp() {
+            isModalDragging = false;
+            modalViewport.classList.remove('dragging');
+            document.body.style.cursor = '';
+            document.body.style.userSelect = '';
+            window.removeEventListener('mousemove', onModalMove);
+            window.removeEventListener('mouseup', onModalUp);
+            saveSettings();
+            scheduleSave();
+          }
+
+          window.addEventListener('mousemove', onModalMove);
+          window.addEventListener('mouseup', onModalUp);
+        });
+
+        modalViewport.addEventListener('wheel', (e) => {
+          e.preventDefault();
+          const step = e.deltaY < 0 ? 5 : -5;
+          const currentZoom = appSettings.photoZoom || 100;
+          appSettings.photoZoom = Math.min(300, Math.max(40, currentZoom + step));
+          applyPhotoStyles();
+          saveSettings();
+        }, { passive: false });
+      }
+    }
+
+    // Модальне вікно: відкриття та закриття
+    function openPhotoAdjustModal() {
+      const img = document.getElementById('user-photo-img');
+      const modalImg = document.getElementById('photo-modal-img');
+      const modal = document.getElementById('photo-modal');
+      const resBadge = document.getElementById('photo-natural-res-badge');
+      const faceBadge = document.getElementById('photo-face-status-badge');
+
+      if (!img || !img.src) return;
+
+      if (modalImg) {
+        modalImg.src = img.src;
+      }
+
+      const temp = new Image();
+      temp.onload = function() {
+        const nw = temp.naturalWidth || temp.width;
+        const nh = temp.naturalHeight || temp.height;
+        appSettings.photoNaturalWidth = nw;
+        appSettings.photoNaturalHeight = nh;
+
+        if (resBadge) {
+          resBadge.innerText = `${nw}×${nh} px`;
+          resBadge.style.display = 'inline-block';
+          resBadge.title = `Оригінальний розмір файлу: ${nw}×${nh} пікселів`;
+        }
+
+        const presetBtn = document.getElementById('btn-preset-2362');
+        if (presetBtn) {
+          const ratio = nw / nh;
+          const isApprox2by3 = Math.abs(ratio - (2362 / 3543)) < 0.08;
+          if (isApprox2by3 || (nw === 2362 && nh === 3543)) {
+            presetBtn.style.borderColor = '#38bdf8';
+            presetBtn.style.color = '#38bdf8';
+            presetBtn.style.background = 'rgba(56, 189, 248, 0.12)';
+          } else {
+            presetBtn.style.borderColor = '';
+            presetBtn.style.color = '';
+            presetBtn.style.background = '';
+          }
+        }
+
+        if (faceBadge) {
+          if (appSettings.detectedFace) {
+            faceBadge.innerHTML = '✨ Обличчя відцентровано';
+            faceBadge.className = 'photo-res-badge photo-face-status-success';
+            faceBadge.style.display = 'inline-flex';
+          } else {
+            faceBadge.style.display = 'none';
+          }
+        }
+
+        applyPhotoStyles();
+      };
+      temp.src = img.src;
+
+      applyPhotoStyles();
+      if (modal) modal.classList.add('open');
+    }
+
+    function closePhotoModal() {
+      const modal = document.getElementById('photo-modal');
+      if (modal) modal.classList.remove('open');
+    }
+
+    function closePhotoModalOnBackdrop(event) {
+      if (event.target && event.target.id === 'photo-modal') {
+        closePhotoModal();
+      }
+    }
+
+    function saveAndClosePhotoModal() {
+      saveSettings();
+      scheduleSave();
+      closePhotoModal();
+    }
+
+    // Керування зумом у модалці
+    function onPhotoZoomChange(val) {
+      appSettings.photoZoom = Math.min(300, Math.max(40, parseInt(val, 10) || 100));
+      applyPhotoStyles();
+      saveSettings();
+    }
+
+    function stepPhotoZoom(delta) {
+      const cur = appSettings.photoZoom || 100;
+      appSettings.photoZoom = Math.min(300, Math.max(40, cur + delta));
+      applyPhotoStyles();
+      saveSettings();
+    }
+
+    // Керування зсувом (джойстик)
+    function nudgePhoto(dx, dy) {
+      appSettings.photoX = (appSettings.photoX || 0) + dx;
+      appSettings.photoY = (appSettings.photoY || 0) + dy;
+      applyPhotoStyles();
+      saveSettings();
+    }
+
+    function resetPhotoOffset() {
+      appSettings.photoX = 0;
+      appSettings.photoY = 0;
+      applyPhotoStyles();
+      saveSettings();
+    }
+
+    // Швидкі пресети позиціонування
+    function applyPhotoPreset(preset) {
+      if (preset === 'ai-face') {
+        autoFitAndCenterFace({ showToast: true });
+        return;
+      }
+      if (preset === 'face') {
+        if (appSettings.detectedFace) {
+          autoFitAndCenterFace({ showToast: true });
+          return;
+        }
+        appSettings.photoZoom = 125;
+        appSettings.photoX = 0;
+        appSettings.photoY = 18;
+      } else if (preset === 'center') {
+        appSettings.photoX = 0;
+        appSettings.photoY = 0;
+      } else if (preset === 'wide') {
+        appSettings.photoZoom = 75;
+        appSettings.photoX = 0;
+        appSettings.photoY = 0;
+      } else if (preset === '2362x3543') {
+        appSettings.photoZoom = 100;
+        appSettings.photoX = 0;
+        appSettings.photoY = 24;
+        appSettings.photoExportRes = 2362;
+      } else if (preset === 'reset') {
+        appSettings.photoZoom = 100;
+        appSettings.photoX = 0;
+        appSettings.photoY = 0;
+      }
+      applyPhotoStyles();
+      saveSettings();
+      scheduleSave();
+    }
+
+    // Вибір роздільної здатності експорту фото (800, 1200, 2362 px)
+    function setPhotoExportRes(res) {
+      appSettings.photoExportRes = parseInt(res, 10) || 1200;
+      applyPhotoStyles();
+      saveSettings();
+      scheduleSave();
+    }
+
+    // Налаштування форми та розміру
+    function setPhotoShape(shape) {
+      appSettings.photoShape = shape;
+      applyPhotoStyles();
+      saveSettings();
+      scheduleSave();
+    }
+
+    function setPhotoSize(size) {
+      appSettings.photoSize = parseInt(size, 10) || 90;
+      applyPhotoStyles();
+      saveSettings();
+      scheduleSave();
+    }
+
+    // Генерація обрізаного та відцентрованого зображення для бездоганного експорту в PPTX
+    function getCroppedPhotoDataUrl() {
+      const img = document.getElementById('user-photo-img');
+      if (!img || !img.src || img.style.display === 'none') return Promise.resolve(null);
+
+      return new Promise((resolve) => {
+        const tempImg = new Image();
+        tempImg.crossOrigin = 'anonymous';
+        tempImg.onload = function() {
+          try {
+            const natW = tempImg.naturalWidth || tempImg.width;
+            const natH = tempImg.naturalHeight || tempImg.height;
+
+            // Визначаємо роздільну здатність полотна на основі вибору користувача або оригінального фото
+            // Якщо фото високої роздільної здатності (наприклад, 2362x3543), використовуємо відповідний розмір без стиснення деталей
+            let targetSize = appSettings.photoExportRes || 1200;
+            if (targetSize === 2362 && natW > 0) {
+              targetSize = Math.max(targetSize, Math.min(natW, 2362));
+            }
+
+            const canvas = document.createElement('canvas');
+            canvas.width = targetSize;
+            canvas.height = targetSize;
+            const ctx = canvas.getContext('2d');
+            if (!ctx) return resolve(img.src);
+
+            // Високоякісна інтерполяція зображення
+            ctx.imageSmoothingEnabled = true;
+            ctx.imageSmoothingQuality = 'high';
+
+            const size = targetSize;
+
+            // Емуляція CSS object-fit: cover
+            const coverScale = Math.max(size / natW, size / natH);
+            const baseW = natW * coverScale;
+            const baseH = natH * coverScale;
+
+            const zoom = (appSettings.photoZoom || 100) / 100;
+            const finalW = baseW * zoom;
+            const finalH = baseH * zoom;
+
+            const displaySize = appSettings.photoSize || 90;
+            const scaleFactor = size / displaySize;
+            const offsetX = (appSettings.photoX || 0) * scaleFactor;
+            const offsetY = (appSettings.photoY || 0) * scaleFactor;
+
+            const drawX = (size - finalW) / 2 + offsetX;
+            const drawY = (size - finalH) / 2 + offsetY;
+
+            // Маскування форми (коло або закруглений прямокутник з радіусом пропорційним розміру)
+            if (appSettings.photoShape === 'circle') {
+              ctx.beginPath();
+              ctx.arc(size / 2, size / 2, size / 2, 0, Math.PI * 2);
+              ctx.closePath();
+              ctx.clip();
+            } else if (appSettings.photoShape === 'rounded') {
+              // Радіус закруглення пропорційний розміру полотна
+              const r = Math.round(size * 0.16);
+              ctx.beginPath();
+              ctx.moveTo(r, 0);
+              ctx.lineTo(size - r, 0);
+              ctx.quadraticCurveTo(size, 0, size, r);
+              ctx.lineTo(size, size - r);
+              ctx.quadraticCurveTo(size, size, size - r, size);
+              ctx.lineTo(r, size);
+              ctx.quadraticCurveTo(0, size, 0, size - r);
+              ctx.lineTo(0, r);
+              ctx.quadraticCurveTo(0, 0, r, 0);
+              ctx.closePath();
+              ctx.clip();
+            }
+
+            ctx.drawImage(tempImg, drawX, drawY, finalW, finalH);
+            resolve(canvas.toDataURL('image/png'));
+          } catch (err) {
+            console.warn('Canvas export fallback:', err);
+            resolve(img.src);
+          }
+        };
+        tempImg.onerror = function() {
+          resolve(img.src);
+        };
+        tempImg.src = img.src;
+      });
+    }
+
+    // Перемикання режиму перегляду
+    function toggleEditMode() {
+      const isEditing = document.body.classList.toggle('is-editing');
+      const btn = document.getElementById('btn-toggle-preview');
+      const text = document.getElementById('preview-text');
+      if (isEditing) {
+        btn.classList.remove('active');
+        text.innerText = 'Попередній перегляд';
+      } else {
+        btn.classList.add('active');
+        text.innerText = 'Продовжити редагування';
+      }
+    }
+
+    // Скидання налаштувань
+    function resetToDefault() {
+      if (confirm('Скинути всі внесені зміни, розміри клітинок та налаштування до початкового зразка?')) {
+        try {
+          localStorage.removeItem(STORAGE_KEY);
+          localStorage.removeItem(PHOTO_STORAGE_KEY);
+          localStorage.removeItem(SETTINGS_STORAGE_KEY);
+        } catch (e) {}
+        window.location.reload();
+      }
+    }
+
+    // Видалення клітинок
+    function deleteItem(btn) {
+      const row = btn.closest('.excel-cell');
+      if (row) {
+        row.remove();
+        scheduleSave();
+      }
+    }
+
+    // Додавання нових елементів з підтримкою розтягування
+    function addContactItem() {
+      const list = document.getElementById('contact-list');
+      const li = document.createElement('li');
+      li.className = 'contact-item excel-cell';
+      li.innerHTML = `
+        <span class="contact-label" contenteditable="true" spellcheck="false">Новий контакт</span>
+        <span class="contact-value" contenteditable="true" spellcheck="false">Вкажіть значення</span>
+        <button class="item-delete-btn no-print" onclick="deleteItem(this)" title="Видалити клітинку">×</button>
+      `;
+      list.appendChild(li);
+      attachExcelResizers();
+      scheduleSave();
+    }
+
+    function addSkillItem() {
+      const group = document.getElementById('skills-group');
+      const div = document.createElement('div');
+      div.className = 'skill-block excel-cell';
+      div.innerHTML = `
+        <div class="skill-name" contenteditable="true" spellcheck="false">Напрямок навички</div>
+        <div class="skill-desc" contenteditable="true" spellcheck="false">Опис компетенцій або технологій</div>
+        <button class="item-delete-btn no-print" onclick="deleteItem(this)" title="Видалити клітинку">×</button>
+      `;
+      group.appendChild(div);
+      attachExcelResizers();
+      scheduleSave();
+    }
+
+    function addLinkItem() {
+      const list = document.getElementById('links-list');
+      const li = document.createElement('li');
+      li.className = 'link-item excel-cell';
+      li.innerHTML = `
+        <span class="link-title" contenteditable="true" spellcheck="false">Новий ресурс</span>
+        <div class="link-url-wrapper">
+          <a href="https://example.com" target="_blank" rel="noopener noreferrer" class="link-url" contenteditable="true" spellcheck="false">example.com/profile</a>
+          <button class="btn-edit-url no-print" onclick="openUrlEditor(this)" title="Змінити URL-адресу">🔗</button>
+        </div>
+        <button class="item-delete-btn no-print" onclick="deleteItem(this)" title="Видалити клітинку">×</button>
+      `;
+      list.appendChild(li);
+      attachExcelResizers();
+      scheduleSave();
+    }
+
+    function addEducationItem() {
+      const group = document.getElementById('education-group');
+      const div = document.createElement('div');
+      div.className = 'education-item excel-cell';
+      div.innerHTML = `
+        <div class="edu-title" contenteditable="true" spellcheck="false">Назва навчального закладу</div>
+        <div class="edu-sub" contenteditable="true" spellcheck="false">Спеціальність / Програма</div>
+        <div class="edu-period" contenteditable="true" spellcheck="false">202X — 202X</div>
+        <div class="edu-note" contenteditable="true" spellcheck="false">Короткий опис здобутої кваліфікації або пройдених модулів.</div>
+        <button class="item-delete-btn no-print" onclick="deleteItem(this)" title="Видалити клітинку">×</button>
+      `;
+      group.appendChild(div);
+      attachExcelResizers();
+      scheduleSave();
+    }
+
+    function addAchievementItem() {
+      const list = document.getElementById('achievements-list');
+      const li = document.createElement('li');
+      li.className = 'achievement-item excel-cell';
+      li.innerHTML = `
+        <span contenteditable="true" spellcheck="false"><strong>Назва досягнення:</strong> Опис результатів, наукової роботи або успішного проєкту.</span>
+        <button class="item-delete-btn no-print" onclick="deleteItem(this)" title="Видалити клітинку">×</button>
+      `;
+      list.appendChild(li);
+      attachExcelResizers();
+      scheduleSave();
+    }
+
+    // Редагування посилань
+    function openUrlEditor(btn) {
+      const wrapper = btn.closest('.link-url-wrapper') || btn.closest('.contact-item');
+      const anchor = wrapper ? wrapper.querySelector('a') : null;
+      if (!anchor) return;
+
+      currentEditingAnchor = anchor;
+      document.getElementById('modal-link-label').value = anchor.innerText.trim();
+      document.getElementById('modal-link-href').value = anchor.getAttribute('href') || '';
+      document.getElementById('url-modal').classList.add('open');
+    }
+
+    function closeUrlModal() {
+      document.getElementById('url-modal').classList.remove('open');
+      currentEditingAnchor = null;
+    }
+
+    function closeUrlModalOnBackdrop(e) {
+      if (e.target.id === 'url-modal') {
+        closeUrlModal();
+      }
+    }
+
+    function saveUrlModal() {
+      if (currentEditingAnchor) {
+        const newLabel = document.getElementById('modal-link-label').value.trim();
+        const newHref = document.getElementById('modal-link-href').value.trim();
+        if (newLabel) currentEditingAnchor.innerText = newLabel;
+        if (newHref) currentEditingAnchor.setAttribute('href', newHref);
+        scheduleSave();
+      }
+      closeUrlModal();
+    }
+
+    // ==========================================================================
+    // ПОВНОЦІННИЙ ЕКСПОРТ У POWERPOINT (.PPTX) З ІНТЕРАКТИВНИМ ТЕКСТОМ
+    // ==========================================================================
+    async function exportToPPTX() {
+      const btn = document.getElementById('btn-export-pptx');
+      const btnText = document.getElementById('pptx-btn-text');
+      const originalText = btnText ? btnText.innerText : 'Експорт в PowerPoint (.pptx)';
+      
+      try {
+        if (btn) btn.classList.add('loading');
+        if (btnText) btnText.innerText = 'Створення PPTX...';
+
+        // Перевіряємо чи завантажена бібліотека PptxGenJS
+        if (typeof PptxGenJS === 'undefined') {
+          await loadPptxGenJsScript();
+        }
+
+        const pptx = new (window.PptxGenJS || PptxGenJS)();
+        pptx.author = "Шеховцов Максим Артемович";
+        pptx.company = "ХНУВС — Факультет кібербезпеки";
+        pptx.title = "Резюме — Шеховцов Максим Артемович";
+        pptx.subject = "Інтерактивне резюме формату А4 (кібербезпека, OSINT, криптографія)";
+
+        // Встановлюємо точний формат А4 книжкової орієнтації: 8.27 x 11.69 дюймів (210 x 297 мм)
+        pptx.defineLayout({ name: 'A4_PORTRAIT', width: 8.27, height: 11.69 });
+        pptx.layout = 'A4_PORTRAIT';
+
+        const slide = pptx.addSlide();
+
+        // 1. Геометрія колонок на основі поточних налаштувань користувача
+        const sidebarPct = (appSettings.sidebarWidth || 33) / 100;
+        const sidebarW = +(8.27 * sidebarPct).toFixed(2);
+        const mainX = sidebarW;
+        const mainW = +(8.27 - sidebarW).toFixed(2);
+
+        // Ліва підкладка сайдбару (темно-синій фон #0C1829)
+        slide.addShape(pptx.ShapeType.rect, {
+          x: 0,
+          y: 0,
+          w: sidebarW,
+          h: 11.69,
+          fill: { color: '0C1829' },
+          line: { color: '16263D', width: 1 }
+        });
+
+        // Права підкладка основної частини (чистий білий фон)
+        slide.addShape(pptx.ShapeType.rect, {
+          x: mainX,
+          y: 0,
+          w: mainW,
+          h: 11.69,
+          fill: { color: 'FFFFFF' },
+          line: { color: 'FFFFFF', width: 0 }
+        });
+
+        // Вертикальна межа між колонками
+        slide.addShape(pptx.ShapeType.line, {
+          x: mainX,
+          y: 0,
+          w: 0,
+          h: 11.69,
+          line: { color: 'E2E8F0', width: 1 }
+        });
+
+        // 2. ФОТОГРАФІЯ КАНДИДАТА З УРАХУВАННЯМ ЦЕНТРУВАННЯ ТА ЗУМУ
+        const photoImg = document.getElementById('user-photo-img');
+        const hasPhoto = photoImg && photoImg.src && (photoImg.src.startsWith('data:image') || photoImg.src.startsWith('http')) && photoImg.style.display !== 'none';
+        const photoSizeInInches = +( (appSettings.photoSize || 90) / 72 ).toFixed(2);
+        const photoSize = Math.max(0.95, Math.min(1.45, photoSizeInInches));
+        const photoX = +(sidebarW / 2 - photoSize / 2).toFixed(2);
+        const photoY = 0.40;
+
+        if (hasPhoto) {
+          try {
+            const croppedPhotoSrc = await getCroppedPhotoDataUrl();
+            slide.addImage({
+              data: croppedPhotoSrc || photoImg.src,
+              x: photoX,
+              y: photoY,
+              w: photoSize,
+              h: photoSize,
+              rounding: appSettings.photoShape !== 'rounded'
+            });
+          } catch (imgErr) {
+            console.warn('Не вдалося додати фото через addImage, малюємо рамку:', imgErr);
+            drawPhotoPlaceholder(slide, pptx, photoX, photoY, photoSize);
+          }
+        } else {
+          drawPhotoPlaceholder(slide, pptx, photoX, photoY, photoSize);
+        }
+
+        // 3. САЙДБАР: КОНТАКТИ, НАВИЧКИ, ПОСИЛАННЯ (УСІ ТЕКСТИ ІНТЕРАКТИВНІ)
+        const sidePad = 0.28;
+        const sideContentW = +(sidebarW - sidePad * 2).toFixed(2);
+        let curSideY = photoY + photoSize + 0.30;
+
+        // --- Блок контактів ---
+        const contactsTitleEl = document.querySelector('#section-contacts .sidebar-section-title');
+        const contactsTitle = contactsTitleEl ? contactsTitleEl.innerText.trim().toUpperCase() : 'КОНТАКТИ';
+        slide.addText(contactsTitle, {
+          x: sidePad,
+          y: curSideY,
+          w: sideContentW,
+          h: 0.24,
+          fontSize: 10,
+          bold: true,
+          color: 'FFFFFF',
+          fontFace: 'Arial',
+          margin: 0
+        });
+        slide.addShape(pptx.ShapeType.line, {
+          x: sidePad,
+          y: curSideY + 0.25,
+          w: sideContentW,
+          h: 0,
+          line: { color: '2563EB', width: 1.5 }
+        });
+        curSideY += 0.32;
+
+        const contactItems = document.querySelectorAll('#contact-list .contact-item');
+        contactItems.forEach(item => {
+          const lblEl = item.querySelector('.contact-label');
+          const valEl = item.querySelector('.contact-value');
+          const lbl = lblEl ? lblEl.innerText.trim().toUpperCase() : '';
+          const val = valEl ? valEl.innerText.trim() : '';
+          const href = valEl && valEl.getAttribute('href') ? valEl.getAttribute('href') : '';
+
+          const runs = [];
+          if (lbl) {
+            runs.push({ text: lbl + '\n', options: { fontSize: 7.5, bold: true, color: '94A3B8', fontFace: 'Arial' } });
+          }
+          runs.push({
+            text: val,
+            options: {
+              fontSize: 9,
+              color: 'F1F5F9',
+              underline: true,
+              fontFace: 'Arial',
+              hyperlink: (href && !href.startsWith('tel:')) ? { url: href } : undefined
+            }
+          });
+
+          slide.addText(runs, {
+            x: sidePad,
+            y: curSideY,
+            w: sideContentW,
+            h: 0.38,
+            margin: 0
+          });
+          curSideY += 0.40;
+        });
+        curSideY += 0.12;
+
+        // --- Блок навичок ---
+        const skillsTitleEl = document.querySelector('#section-skills .sidebar-section-title');
+        const skillsTitle = skillsTitleEl ? skillsTitleEl.innerText.trim().toUpperCase() : 'НАВИЧКИ';
+        slide.addText(skillsTitle, {
+          x: sidePad,
+          y: curSideY,
+          w: sideContentW,
+          h: 0.24,
+          fontSize: 10,
+          bold: true,
+          color: 'FFFFFF',
+          fontFace: 'Arial',
+          margin: 0
+        });
+        slide.addShape(pptx.ShapeType.line, {
+          x: sidePad,
+          y: curSideY + 0.25,
+          w: sideContentW,
+          h: 0,
+          line: { color: '2563EB', width: 1.5 }
+        });
+        curSideY += 0.32;
+
+        const skillBlocks = document.querySelectorAll('#skills-group .skill-block');
+        skillBlocks.forEach(block => {
+          const nmEl = block.querySelector('.skill-name');
+          const dsEl = block.querySelector('.skill-desc');
+          const nm = nmEl ? nmEl.innerText.trim() : '';
+          const ds = dsEl ? dsEl.innerText.trim() : '';
+
+          slide.addText([
+            { text: nm + '\n', options: { fontSize: 9.5, bold: true, color: '60A5FA', fontFace: 'Arial' } },
+            { text: ds, options: { fontSize: 8.5, color: 'CBD5E1', fontFace: 'Arial' } }
+          ], {
+            x: sidePad,
+            y: curSideY,
+            w: sideContentW,
+            h: 0.46,
+            margin: 0
+          });
+          curSideY += 0.50;
+        });
+        curSideY += 0.12;
+
+        // --- Блок посилань ---
+        const linksTitleEl = document.querySelector('#section-links .sidebar-section-title');
+        const linksTitle = linksTitleEl ? linksTitleEl.innerText.trim().toUpperCase() : 'ПОСИЛАННЯ';
+        slide.addText(linksTitle, {
+          x: sidePad,
+          y: curSideY,
+          w: sideContentW,
+          h: 0.24,
+          fontSize: 10,
+          bold: true,
+          color: 'FFFFFF',
+          fontFace: 'Arial',
+          margin: 0
+        });
+        slide.addShape(pptx.ShapeType.line, {
+          x: sidePad,
+          y: curSideY + 0.25,
+          w: sideContentW,
+          h: 0,
+          line: { color: '2563EB', width: 1.5 }
+        });
+        curSideY += 0.32;
+
+        const linkItems = document.querySelectorAll('#links-list .link-item');
+        linkItems.forEach(item => {
+          const ttlEl = item.querySelector('.link-title');
+          const urlEl = item.querySelector('.link-url');
+          const ttl = ttlEl ? ttlEl.innerText.trim().toUpperCase() : '';
+          const urlTxt = urlEl ? urlEl.innerText.trim() : '';
+          const href = urlEl && urlEl.getAttribute('href') ? urlEl.getAttribute('href') : '';
+
+          slide.addText([
+            { text: ttl + '\n', options: { fontSize: 7.5, bold: true, color: '94A3B8', fontFace: 'Arial' } },
+            { text: urlTxt, options: { fontSize: 8.5, color: '93C5FD', underline: true, fontFace: 'Arial', hyperlink: href ? { url: href } : undefined } }
+          ], {
+            x: sidePad,
+            y: curSideY,
+            w: sideContentW,
+            h: 0.38,
+            margin: 0
+          });
+          curSideY += 0.40;
+        });
+
+        // 4. ОСНОВНА ЧАСТИНА (ПРАВА КОЛОНКА)
+        const mainPad = 0.38;
+        const mX = +(mainX + mainPad).toFixed(2);
+        const mW = +(mainW - mainPad * 2).toFixed(2);
+        let curMainY = 0.45;
+
+        // ПІБ кандидата
+        const nameEl = document.querySelector('.candidate-name');
+        const nameText = nameEl ? nameEl.innerText.replace(/[\r\n]+/g, '\n').trim() : 'ШЕХОВЦОВ МАКСИМ АРТЕМОВИЧ';
+        slide.addText(nameText, {
+          x: mX,
+          y: curMainY,
+          w: mW,
+          h: 0.85,
+          fontSize: 22,
+          bold: true,
+          color: '0C1829',
+          fontFace: 'Arial',
+          margin: 0,
+          breakLine: true
+        });
+        curMainY += 0.90;
+
+        // Статус / посада
+        const statusEl = document.querySelector('.candidate-status');
+        if (statusEl && statusEl.innerText.trim()) {
+          slide.addText(statusEl.innerText.trim(), {
+            x: mX,
+            y: curMainY,
+            w: mW,
+            h: 0.28,
+            fontSize: 11,
+            bold: true,
+            color: '1D4ED8',
+            fontFace: 'Arial',
+            margin: 0
+          });
+          curMainY += 0.34;
+        }
+
+        // Лінія під заголовком
+        slide.addShape(pptx.ShapeType.line, {
+          x: mX,
+          y: curMainY,
+          w: mW,
+          h: 0,
+          line: { color: '0C1829', width: 2 }
+        });
+        curMainY += 0.24;
+
+        // --- Блок: Цілі ---
+        const goalsTitleEl = document.querySelector('#section-goals .section-title');
+        const goalsTitle = goalsTitleEl ? goalsTitleEl.innerText.trim().toUpperCase() : 'ЦІЛІ ТА ПРОФЕСІЙНИЙ ПРОФІЛЬ';
+        const goalsTextEl = document.querySelector('#section-goals .goals-text');
+        const goalsText = goalsTextEl ? goalsTextEl.innerText.trim() : '';
+
+        slide.addShape(pptx.ShapeType.rect, {
+          x: mX,
+          y: curMainY + 0.05,
+          w: 0.08,
+          h: 0.08,
+          fill: { color: '1D4ED8' },
+          line: { color: '1D4ED8' }
+        });
+        slide.addText(goalsTitle, {
+          x: mX + 0.15,
+          y: curMainY,
+          w: mW - 0.15,
+          h: 0.24,
+          fontSize: 10.5,
+          bold: true,
+          color: '0C1829',
+          fontFace: 'Arial',
+          margin: 0
+        });
+        slide.addShape(pptx.ShapeType.line, {
+          x: mX,
+          y: curMainY + 0.24,
+          w: mW,
+          h: 0,
+          line: { color: '0C1829', width: 1 }
+        });
+        curMainY += 0.32;
+
+        if (goalsText) {
+          slide.addText(goalsText, {
+            x: mX,
+            y: curMainY,
+            w: mW,
+            h: 0.65,
+            fontSize: 9.5,
+            color: '334155',
+            fontFace: 'Arial',
+            align: 'justify',
+            margin: 0
+          });
+          curMainY += 0.75;
+        }
+
+        // --- Блок: Освіта ---
+        const eduTitleEl = document.querySelector('#section-education .section-title');
+        const eduTitle = eduTitleEl ? eduTitleEl.innerText.trim().toUpperCase() : 'ОСВІТА';
+
+        slide.addShape(pptx.ShapeType.rect, {
+          x: mX,
+          y: curMainY + 0.05,
+          w: 0.08,
+          h: 0.08,
+          fill: { color: '1D4ED8' },
+          line: { color: '1D4ED8' }
+        });
+        slide.addText(eduTitle, {
+          x: mX + 0.15,
+          y: curMainY,
+          w: mW - 0.15,
+          h: 0.24,
+          fontSize: 10.5,
+          bold: true,
+          color: '0C1829',
+          fontFace: 'Arial',
+          margin: 0
+        });
+        slide.addShape(pptx.ShapeType.line, {
+          x: mX,
+          y: curMainY + 0.24,
+          w: mW,
+          h: 0,
+          line: { color: '0C1829', width: 1 }
+        });
+        curMainY += 0.32;
+
+        const eduItems = document.querySelectorAll('#education-group .education-item');
+        eduItems.forEach(item => {
+          const tEl = item.querySelector('.edu-title');
+          const sEl = item.querySelector('.edu-sub');
+          const pEl = item.querySelector('.edu-period');
+          const nEl = item.querySelector('.edu-note');
+
+          const runs = [];
+          if (tEl && tEl.innerText.trim()) {
+            runs.push({ text: tEl.innerText.trim() + '\n', options: { fontSize: 10.5, bold: true, color: '0F172A', fontFace: 'Arial' } });
+          }
+          if (sEl && sEl.innerText.trim()) {
+            runs.push({ text: sEl.innerText.trim() + '\n', options: { fontSize: 9.5, bold: true, color: '2563EB', fontFace: 'Arial' } });
+          }
+          if (pEl && pEl.innerText.trim()) {
+            runs.push({ text: pEl.innerText.trim() + '\n', options: { fontSize: 8.5, color: '64748B', fontFace: 'Arial' } });
+          }
+          if (nEl && nEl.innerText.trim()) {
+            runs.push({ text: nEl.innerText.trim(), options: { fontSize: 9, color: '475569', fontFace: 'Arial' } });
+          }
+
+          slide.addText(runs, {
+            x: mX,
+            y: curMainY,
+            w: mW,
+            h: 0.85,
+            margin: 0
+          });
+          curMainY += 0.95;
+        });
+
+        // --- Блок: Досягнення ---
+        const achTitleEl = document.querySelector('#section-achievements .section-title');
+        const achTitle = achTitleEl ? achTitleEl.innerText.trim().toUpperCase() : 'ДОСЯГНЕННЯ ТА ПРАКТИЧНИЙ ДОСВІД';
+
+        slide.addShape(pptx.ShapeType.rect, {
+          x: mX,
+          y: curMainY + 0.05,
+          w: 0.08,
+          h: 0.08,
+          fill: { color: '1D4ED8' },
+          line: { color: '1D4ED8' }
+        });
+        slide.addText(achTitle, {
+          x: mX + 0.15,
+          y: curMainY,
+          w: mW - 0.15,
+          h: 0.24,
+          fontSize: 10.5,
+          bold: true,
+          color: '0C1829',
+          fontFace: 'Arial',
+          margin: 0
+        });
+        slide.addShape(pptx.ShapeType.line, {
+          x: mX,
+          y: curMainY + 0.24,
+          w: mW,
+          h: 0,
+          line: { color: '0C1829', width: 1 }
+        });
+        curMainY += 0.32;
+
+        const achItems = document.querySelectorAll('#achievements-list .achievement-item');
+        achItems.forEach(item => {
+          const strongEl = item.querySelector('strong');
+          const runs = [];
+
+          if (strongEl) {
+            const strongText = strongEl.innerText.trim();
+            const fullText = item.innerText.replace(strongText, '').replace(/^[:\s]+/, '').trim();
+            runs.push({ text: strongText + ' ', options: { bold: true, color: '0F172A', fontSize: 9.5, fontFace: 'Arial' } });
+            runs.push({ text: fullText, options: { bold: false, color: '334155', fontSize: 9.5, fontFace: 'Arial' } });
+          } else {
+            runs.push({ text: item.innerText.trim(), options: { bold: false, color: '334155', fontSize: 9.5, fontFace: 'Arial' } });
+          }
+
+          slide.addText(runs, {
+            x: mX,
+            y: curMainY,
+            w: mW,
+            h: 0.44,
+            bullet: { code: '25AA', color: '1D4ED8' },
+            margin: 0
+          });
+          curMainY += 0.48;
+        });
+
+        // --- Колонтитул внизу сторінки ---
+        const footerSpans = document.querySelectorAll('#cell-footer span');
+        const footerLeft = footerSpans[0] ? footerSpans[0].innerText.trim() : 'СПЕЦІАЛІЗОВАНЕ РЕЗЮМЕ • СТАНДАРТ СИЛОВИХ ВІДОМСТВ';
+        const footerRight = footerSpans[1] ? footerSpans[1].innerText.trim() : 'ФОРМАТ A4 • 1 СТОРІНКА';
+
+        slide.addShape(pptx.ShapeType.line, {
+          x: mX,
+          y: 11.20,
+          w: mW,
+          h: 0,
+          line: { color: 'E2E8F0', width: 1 }
+        });
+        slide.addText(footerLeft, {
+          x: mX,
+          y: 11.25,
+          w: mW * 0.6,
+          h: 0.22,
+          fontSize: 7.5,
+          color: '94A3B8',
+          fontFace: 'Arial',
+          margin: 0
+        });
+        slide.addText(footerRight, {
+          x: mX + mW * 0.6,
+          y: 11.25,
+          w: mW * 0.4,
+          h: 0.22,
+          fontSize: 7.5,
+          color: '94A3B8',
+          fontFace: 'Arial',
+          align: 'right',
+          margin: 0
+        });
+
+        // 5. ГЕНЕРАЦІЯ ТА ЗБЕРЕЖЕННЯ ФАЙЛУ
+        const rawFirstWord = nameText.split('\n')[0] || 'Шеховцов';
+        const cleanName = rawFirstWord.replace(/[^\wа-яА-ЯіїєґІЇЄҐ]/g, '_');
+        const fileName = `Резюме_${cleanName}.pptx`;
+
+        await pptx.writeFile({ fileName });
+
+        showPptxToast();
+      } catch (err) {
+        console.error('Помилка генерації PPTX:', err);
+        alert('Помилка під час створення PowerPoint файлу: ' + (err.message || err));
+      } finally {
+        if (btn) btn.classList.remove('loading');
+        if (btnText) btnText.innerText = originalText;
+      }
+    }
+
+    function drawPhotoPlaceholder(slide, pptx, photoX, photoY, photoSize) {
+      const shapeType = appSettings.photoShape === 'rounded' ? pptx.ShapeType.roundRect : pptx.ShapeType.ellipse;
+      slide.addShape(shapeType, {
+        x: photoX,
+        y: photoY,
+        w: photoSize,
+        h: photoSize,
+        fill: { color: '1E293B' },
+        line: { color: '334155', width: 2 }
+      });
+      slide.addText("Місце для\nфото", {
+        x: photoX,
+        y: photoY + (photoSize * 0.28),
+        w: photoSize,
+        h: 0.55,
+        align: "center",
+        fontSize: 9,
+        color: "94A3B8",
+        bold: true,
+        fontFace: "Arial"
+      });
+    }
+
+    function loadPptxGenJsScript() {
+      return new Promise((resolve, reject) => {
+        if (typeof PptxGenJS !== 'undefined') return resolve();
+        const script = document.createElement('script');
+        script.src = '/pptxgen.bundle.js';
+        script.onload = () => resolve();
+        script.onerror = () => {
+          const cdn = document.createElement('script');
+          cdn.src = 'https://cdn.jsdelivr.net/npm/pptxgenjs@3.12.0/dist/pptxgen.bundle.js';
+          cdn.onload = () => resolve();
+          cdn.onerror = () => reject(new Error('Не вдалося завантажити бібліотеку PptxGenJS'));
+          document.head.appendChild(cdn);
+        };
+        document.head.appendChild(script);
+      });
+    }
+
+    function showPptxToast() {
+      const toast = document.getElementById('pptx-toast');
+      if (toast) {
+        toast.classList.add('show');
+        setTimeout(() => {
+          toast.classList.remove('show');
+        }, 8000);
+      }
+    }
+
+    function closePptxToast() {
+      const toast = document.getElementById('pptx-toast');
+      if (toast) {
+        toast.classList.remove('show');
+      }
+    }
+  </script>
+
+  <!-- Спливаюче сповіщення про завантаження PPTX з інтерактивним текстом -->
+  <div id="pptx-toast" class="pptx-toast no-print">
+    <div class="toast-icon">📊</div>
+    <div class="toast-content">
+      <div class="toast-title">Файл PowerPoint (.pptx) успішно створено!</div>
+      <div class="toast-desc">Усі тексти та блоки є повністю інтерактивними — будь-хто може відкрити файл у Microsoft PowerPoint, Google Презентаціях чи LibreOffice і вільно редагувати будь-яке слово, заголовок чи посилання.</div>
+    </div>
+    <button class="toast-close" onclick="closePptxToast()" title="Закрити">×</button>
+  </div>
+
+</body>
+</html>
